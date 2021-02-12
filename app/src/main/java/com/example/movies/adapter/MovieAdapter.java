@@ -1,6 +1,8 @@
 package com.example.movies.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
+import com.example.movies.details.MovieDetails;
 import com.example.movies.model.Result;
 
 
@@ -18,8 +21,8 @@ import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private Context context;
-    private ArrayList<Result> resultArrayListList;
+    private final Context context;
+    private final ArrayList<Result> resultArrayListList;
 
 
     public MovieAdapter(Context context, ArrayList<Result> resultArrayListList) {
@@ -55,17 +58,30 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView movieImageView;
-        private TextView titleTextView;
+        private final ImageView movieImageView;
+        private final TextView titleTextView;
 
-
-        //ONCLICK METHOD FOR DETAIL PAGE
 
         public MovieViewHolder(View itemView) {
             super(itemView);
 
             movieImageView = itemView.findViewById(R.id.movieImage);
             titleTextView = itemView.findViewById(R.id.titleMovie);
+
+            itemView.setOnClickListener(v -> {
+                int adapterPosition = getAdapterPosition();
+
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+
+                    Result resultPosition = resultArrayListList.get(adapterPosition);
+
+                    Intent intent = new Intent(context, MovieDetails.class);
+                    intent.putExtra("result", resultPosition);
+                    context.startActivity(intent);
+
+
+                }
+            });
 
         }
     }
