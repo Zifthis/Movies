@@ -59,6 +59,8 @@ public class MovieDetails extends AppCompatActivity {
             // genersTxt.setText(result.getGenreIds());
             overviewTxt.setText(result.getOverview());
 
+
+
         }
 
     }

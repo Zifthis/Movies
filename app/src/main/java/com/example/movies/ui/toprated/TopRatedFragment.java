@@ -1,6 +1,7 @@
 package com.example.movies.ui.toprated;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
-import com.example.movies.model.PopularMovies;
 import com.example.movies.model.Result;
 import com.example.movies.model.TopRated;
 import com.example.movies.rest.APIClient;
-import com.example.movies.rest.PopularMoviesEndPoint;
 import com.example.movies.rest.TopRatedMoviesEndPoint;
 
 import java.util.ArrayList;
@@ -28,15 +28,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class TopRatedFragment extends Fragment {
+public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private ArrayList<Result> resultsTopRated;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View root;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_toprated, container, false);
-
+        root = inflater.inflate(R.layout.fragment_toprated, container, false);
+        return root;
     }
 
     @Override
@@ -50,7 +52,16 @@ public class TopRatedFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
+
+        swipeRefreshLayout = root.findViewById(R.id.swipe_toprated);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         getPopularMovies();
+
     }
 
     public void getPopularMovies() {
@@ -76,4 +87,15 @@ public class TopRatedFragment extends Fragment {
         });
     }
 
+
+    @Override
+    public void onRefresh() {
+
+        new Handler().postDelayed(() -> {
+            getPopularMovies();
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), "Refreshed", Toast.LENGTH_LONG).show();
+        }, 1500);
+
+    }
 }
