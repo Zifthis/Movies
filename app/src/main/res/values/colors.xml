@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bg_color">#191b20</color>
     <color name="txt_color">#f0b90b</color>
+    <color name="bg_main">#14151a</color>
+    <color name="card_color">#1e2026</color>
 
 </resources>

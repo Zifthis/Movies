@@ -2,21 +2,16 @@ package com.example.movies.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.details.MovieDetails;
 import com.example.movies.model.Result;
-
-
 import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
@@ -42,6 +37,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         String imagePath = "https://image.tmdb.org/t/p/w400" + resultArrayListList.get(position).getPosterPath();
         Glide.with(context)
                 .load(imagePath)
+                .placeholder(R.drawable.placeholder)
                 .into(holder.movieImageView);
 
 

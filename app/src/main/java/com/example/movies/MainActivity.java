@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.loading_activity);
 
         getSupportActionBar().hide();
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(i < 100){
+                if (i < 100) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -56,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
                     });
                     progressBar.setProgress(i);
                     i++;
-                }else {
+                } else {
                     timer.cancel();
-                    Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
-        },0,50);
+        }, 0, 50);
 
     }
 

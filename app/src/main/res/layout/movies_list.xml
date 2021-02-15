@@ -11,12 +11,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="15dp"
-        android:elevation="3dp"
-        card_view:cardCornerRadius="8dp">
+        android:elevation="5dp"
+        card_view:cardCornerRadius="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/card_color">
 
             <ImageView
                 android:id="@+id/movieImage"
@@ -26,6 +27,7 @@
                 android:scaleType="fitXY" />
 
             <TextView
+                android:textColor="@color/txt_color"
                 android:id="@+id/titleMovie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

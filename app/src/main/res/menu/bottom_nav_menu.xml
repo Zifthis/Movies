@@ -3,12 +3,17 @@
 
     <item
         android:id="@+id/navigation_toprated"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@mipmap/ic_toprated"
         android:title="@string/title_toprated" />
 
     <item
         android:id="@+id/navigation_popular"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@mipmap/ic_popular"
         android:title="@string/title_popular" />
+
+    <item
+        android:id="@+id/navigation_upcoming"
+        android:icon="@mipmap/ic_upcoming"
+        android:title="@string/title_upcoming" />
 
 </menu>

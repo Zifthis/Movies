@@ -17,4 +17,10 @@
         android:label="@string/title_popular"
         tools:layout="@layout/fragment_popular" />
 
+    <fragment
+        android:id="@+id/navigation_upcoming"
+        android:name="com.example.movies.ui.popular.PopularFragment"
+        android:label="@string/title_upcoming"
+        tools:layout="@layout/fragment_upcoming" />
+
 </navigation>
