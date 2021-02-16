@@ -50,7 +50,7 @@
             android:paddingRight="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/txt_color"
+            android:textColor="@color/white"
             android:textSize="25sp" />
 
         <TextView
@@ -70,7 +70,7 @@
             android:paddingLeft="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/txt_color"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <TextView
@@ -90,7 +90,7 @@
             android:paddingLeft="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/txt_color"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <TextView
@@ -111,7 +111,7 @@
             android:paddingRight="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:textColor="@color/txt_color"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <TextView
@@ -149,7 +149,8 @@
             android:backgroundTint="@color/txt_color"
             android:text="Similar Movie"
             android:layout_margin="8dp"
-            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textColor="@color/bg_main"
             android:textSize="12sp" />
 
     </LinearLayout>

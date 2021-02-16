@@ -30,10 +30,11 @@ public class SimilarMovies extends AppCompatActivity {
 
     private int intKey = R.string.api_key;
     private String apiKey = Integer.toString(intKey);
-    private String recivedMovieId;
+    private int recivedMovieId;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
-    private MovieAdapter adapter;
+    private String id;
+
     private ArrayList<Result> similarResult;
 
     @Override
@@ -42,45 +43,45 @@ public class SimilarMovies extends AppCompatActivity {
         setContentView(R.layout.similar_movie);
 
         Bundle extras = getIntent().getExtras();
-        recivedMovieId = extras.getString("resultSimilar");
+        recivedMovieId = extras.getInt("resultSimilar");
+
+        id = String.valueOf(recivedMovieId);
 
         recyclerView = findViewById(R.id.similar_recycler);
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         getSimilarMovies();
 
+        System.out.println(id);
 
         swipeRefreshLayout = findViewById(R.id.swipe_similar);
-        swipeRefreshLayout.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
+                android.R.color.black,
+                android.R.color.holo_orange_light);
+                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
 
-                getSimilarMovies();
+                        getSimilarMovies();
 
-            }
-        });
+                    }
+                });
 
     }
 
     public void getSimilarMovies() {
         SimilarMoviesEndPoint similarMoviesEndPoint = APIClient.getClient().create(SimilarMoviesEndPoint.class);
-        Call<Similar> call = similarMoviesEndPoint.getSimilar(apiKey, recivedMovieId);
+        Call<Similar> call = similarMoviesEndPoint.getSimilar(apiKey, id);
         call.enqueue(new Callback<Similar>() {
             @Override
             public void onResponse(Call<Similar> call, Response<Similar> response) {
 
-
                 if (response.isSuccessful()) {
                     Similar similar = response.body();
                     similarResult = (ArrayList<Result>) similar.getResults();
-                    recyclerView.setAdapter(new MovieAdapter(getApplicationContext(),similarResult));
-                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(new MovieAdapter(getApplicationContext(), similarResult));
 
                 }
 

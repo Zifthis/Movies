@@ -11,5 +11,6 @@
     <color name="txt_color">#f0b90b</color>
     <color name="bg_main">#14151a</color>
     <color name="card_color">#1e2026</color>
+    <color name="icon_notselected">#757575</color>
 
 </resources>

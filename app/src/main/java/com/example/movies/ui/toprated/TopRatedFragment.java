@@ -55,10 +55,9 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeRefreshLayout = root.findViewById(R.id.swipe_toprated);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
+                android.R.color.black,
+                android.R.color.holo_orange_light);
 
         getPopularMovies();
 

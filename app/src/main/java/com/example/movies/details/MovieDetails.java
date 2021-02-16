@@ -39,6 +39,7 @@ public class MovieDetails extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Detail View");
 
+
         String imgPoster, imgCover;
         ImageView coverImg = findViewById(R.id.poster);
         ImageView posterImg = findViewById(R.id.cover);
