@@ -7,12 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.details.MovieDetails;
+import com.example.movies.details.SimilarMovies;
+import com.example.movies.model.PopularMovies;
 import com.example.movies.model.Result;
+import com.example.movies.model.Similar;
+import com.example.movies.rest.APIClient;
+import com.example.movies.rest.SimilarMoviesEndPoint;
+
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
@@ -42,6 +54,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
 
         holder.titleTextView.setText(resultArrayListList.get(position).getTitle());
+        holder.ratingView.setText(resultArrayListList.get(position).getVoteAverage().toString());
+        holder.releasedateView.setText(resultArrayListList.get(position).getReleaseDate());
+        holder.originalTitleView.setText(resultArrayListList.get(position).getOriginalLanguage());
 
     }
 
@@ -56,6 +71,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         private final ImageView movieImageView;
         private final TextView titleTextView;
+        private final TextView ratingView;
+        private final TextView releasedateView;
+        private final TextView originalTitleView;
+
 
 
         public MovieViewHolder(View itemView) {
@@ -63,6 +82,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             movieImageView = itemView.findViewById(R.id.movieImage);
             titleTextView = itemView.findViewById(R.id.titleMovie);
+            ratingView = itemView.findViewById(R.id.ratingMovieTxt);
+            releasedateView = itemView.findViewById(R.id.releasedateTxt);
+            originalTitleView = itemView.findViewById(R.id.originalTitleTxt);
 
             itemView.setOnClickListener(v -> {
                 int adapterPosition = getAdapterPosition();
@@ -75,11 +97,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     intent.putExtra("result", resultPosition);
                     context.startActivity(intent);
 
-
                 }
             });
 
         }
+
+
+
     }
+
+
 
 }

@@ -60,7 +60,7 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         recyclerView = view.findViewById(R.id.upcoming_recylcer);
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
 
@@ -101,4 +101,7 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
         }, 1500);
 
     }
+
+
+
 }

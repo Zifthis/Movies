@@ -12,33 +12,88 @@
         android:layout_gravity="center"
         android:layout_margin="15dp"
         android:elevation="5dp"
-        card_view:cardCornerRadius="10dp">
+        card_view:cardCornerRadius="15dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/card_color">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/movieImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="140dp"
+                android:layout_height="220dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitXY" />
 
-            <TextView
-                android:textColor="@color/txt_color"
-                android:id="@+id/titleMovie"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/movieImage"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:textSize="15dp" />
+                android:layout_height="match_parent"
+                android:background="@color/card_color"
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/titleMovie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/txt_color"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/ratingMovieTxt"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:textStyle="bold"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/releasedateTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/txt_color"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/originalTitleTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/txt_color"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>

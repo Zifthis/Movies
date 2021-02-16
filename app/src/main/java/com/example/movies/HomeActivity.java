@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -14,6 +15,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.movies.adapter.MovieAdapter;
+import com.example.movies.model.Similar;
+import com.example.movies.rest.SimilarMoviesEndPoint;
 import com.example.movies.slider.SliderAdapter;
 import com.example.movies.model.Result;
 import com.example.movies.model.Upcoming;
@@ -36,13 +40,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager2;
     private Handler slideHandler = new Handler();
+    private Fragment selectedFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
@@ -51,10 +56,15 @@ public class HomeActivity extends AppCompatActivity {
         viewPager2 = findViewById(R.id.viewpagerSlider);
 
         List<SliderItem> sliderItems = new ArrayList<>();
-        sliderItems.add(new SliderItem(R.drawable.popular));
-        sliderItems.add(new SliderItem(R.drawable.upcoming));
-        sliderItems.add(new SliderItem(R.drawable.toprated));
-        sliderItems.add(new SliderItem(R.drawable.top10));
+        sliderItems.add(new SliderItem(R.drawable.hbomax));
+        sliderItems.add(new SliderItem(R.drawable.netflix));
+        sliderItems.add(new SliderItem(R.drawable.disney));
+        sliderItems.add(new SliderItem(R.drawable.curosity));
+        sliderItems.add(new SliderItem(R.drawable.fubotv));
+        sliderItems.add(new SliderItem(R.drawable.hulu));
+        sliderItems.add(new SliderItem(R.drawable.vrv));
+        sliderItems.add(new SliderItem(R.drawable.youtubetv));
+        sliderItems.add(new SliderItem(R.drawable.primevideo));
 
         viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2));
 
@@ -93,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
 
-        Fragment selectedFragment = null;
+        selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();
@@ -111,27 +121,6 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     };
 
-    public void getUpcomingMovies() {
-        UpcomingEndPoint upcomingEndPoint = APIClient.getClient().create(UpcomingEndPoint.class);
-        Call<Upcoming> call = upcomingEndPoint.getUpcoming(this.getString(R.string.api_key));
-        call.enqueue(new Callback<Upcoming>() {
-            @Override
-            public void onResponse(Call<Upcoming> call, Response<Upcoming> response) {
-
-                if (response.isSuccessful()) {
-                    Upcoming upcoming = response.body();
-                    //resultsUpcoming = (ArrayList<Result>) upcoming.getResults();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Upcoming> call, Throwable t) {
-                Toast.makeText(HomeActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     @Override
     protected void onPause() {
@@ -144,4 +133,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onPostResume();
         slideHandler.postDelayed(sliderRunnable, 2000);
     }
+
+
 }
