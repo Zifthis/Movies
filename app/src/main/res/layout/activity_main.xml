@@ -8,39 +8,46 @@
     android:background="@color/bg_main"
     android:orientation="vertical">
 
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpagerSlider"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_weight="0">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_corner_bot">
 
-    </androidx.viewpager2.widget.ViewPager2>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpagerSlider"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="15dp"
+
+            android:layout_weight="0">
+
+        </androidx.viewpager2.widget.ViewPager2>
+    </LinearLayout>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movie list:"
-        android:textSize="12sp"
-        android:padding="18dp"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:background="@color/card_color"
-        android:textColor="@color/txt_color"
         android:layout_marginBottom="10dp"
-        />
+        android:background="@drawable/round_corners"
+        android:padding="18dp"
+        android:text="Movie list:"
+        android:textAllCaps="true"
+        android:textColor="@color/txt_color"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_above="@+id/bottom_nav"
-        android:layout_weight="1"
         android:layout_marginBottom="5dp"
+        android:layout_weight="1"
         android:background="@drawable/round_corner_top"
         android:paddingTop="15dp" />
 
@@ -48,12 +55,13 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_weight="0"
-        app:itemIconSize="38sp"
         android:background="@color/bg_main"
-        app:itemTextColor="@color/txt_color"
+        app:itemIconSize="38sp"
+        app:itemIconTint="@color/txt_color"
+        android:layout_margin="3dp"
+        app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav_menu" />
-
 
 </LinearLayout>

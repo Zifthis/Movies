@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
+import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.model.PopularMovies;
 import com.example.movies.model.Result;
 import com.example.movies.model.Similar;
@@ -29,6 +30,7 @@ public class MovieDetails extends AppCompatActivity {
 
 
     private Result result;
+    MovieAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class MovieDetails extends AppCompatActivity {
 
 
             titelTxt.setText(result.getTitle());
-            relasedateTxt.setText(result.getReleaseDate());
+            relasedateTxt.setText(adapter.dateAndTimeFormat(result.getReleaseDate()));
             genersTxt.setText(result.getGenreIds().toString());
             overviewTxt.setText(result.getOverview());
 

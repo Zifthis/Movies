@@ -3,8 +3,11 @@ package com.example.movies;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -12,18 +15,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Toast;
 
-import com.example.movies.adapter.MovieAdapter;
-import com.example.movies.model.Similar;
-import com.example.movies.rest.SimilarMoviesEndPoint;
 import com.example.movies.slider.SliderAdapter;
-import com.example.movies.model.Result;
-import com.example.movies.model.Upcoming;
-import com.example.movies.rest.APIClient;
-import com.example.movies.rest.UpcomingEndPoint;
-import com.example.movies.slider.SliderItem;
+import com.example.movies.slider.SliderConstructor;
 import com.example.movies.ui.popular.PopularFragment;
 import com.example.movies.ui.toprated.TopRatedFragment;
 import com.example.movies.ui.upcoming.UpcomingFragment;
@@ -31,10 +25,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -53,20 +43,23 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TopRatedFragment()).commit();
 
+
+
+
         viewPager2 = findViewById(R.id.viewpagerSlider);
 
-        List<SliderItem> sliderItems = new ArrayList<>();
-        sliderItems.add(new SliderItem(R.drawable.hbomax));
-        sliderItems.add(new SliderItem(R.drawable.netflix));
-        sliderItems.add(new SliderItem(R.drawable.disney));
-        sliderItems.add(new SliderItem(R.drawable.curosity));
-        sliderItems.add(new SliderItem(R.drawable.fubotv));
-        sliderItems.add(new SliderItem(R.drawable.hulu));
-        sliderItems.add(new SliderItem(R.drawable.vrv));
-        sliderItems.add(new SliderItem(R.drawable.youtubetv));
-        sliderItems.add(new SliderItem(R.drawable.primevideo));
+        List<SliderConstructor> sliderConstructors = new ArrayList<>();
+        sliderConstructors.add(new SliderConstructor(R.drawable.hbomax));
+        sliderConstructors.add(new SliderConstructor(R.drawable.netflix));
+        sliderConstructors.add(new SliderConstructor(R.drawable.disney));
+        sliderConstructors.add(new SliderConstructor(R.drawable.curosity));
+        sliderConstructors.add(new SliderConstructor(R.drawable.fubotv));
+        sliderConstructors.add(new SliderConstructor(R.drawable.hulu));
+        sliderConstructors.add(new SliderConstructor(R.drawable.vrv));
+        sliderConstructors.add(new SliderConstructor(R.drawable.youtubetv));
+        sliderConstructors.add(new SliderConstructor(R.drawable.primevideo));
 
-        viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2));
+        viewPager2.setAdapter(new SliderAdapter(sliderConstructors, viewPager2));
 
         viewPager2.setClipToPadding(false);
         viewPager2.setClipChildren(false);
@@ -89,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 slideHandler.removeCallbacks(sliderRunnable);
-                slideHandler.postDelayed(sliderRunnable, 2000);
+                slideHandler.postDelayed(sliderRunnable, 6000);
             }
         });
     }

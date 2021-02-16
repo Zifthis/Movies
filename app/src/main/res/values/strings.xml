@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Movies</string>
-    <string name="title_toprated">Top Rated Movies</string>
-    <string name="title_popular">Popular Movies</string>
-    <string name="title_upcoming">Upcoming Movies</string>
+    <string name="title_toprated">Top Rated</string>
+    <string name="title_popular">Popular</string>
+    <string name="title_upcoming">Upcoming</string>
     <string name="api_key">fe3b8cf16d78a0e23f0c509d8c37caad</string>
 </resources>

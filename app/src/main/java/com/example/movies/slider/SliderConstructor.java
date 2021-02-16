@@ -1,10 +1,10 @@
 package com.example.movies.slider;
 
-public class SliderItem {
+public class SliderConstructor {
 
     private int image;
 
-    public SliderItem(int image) {
+    public SliderConstructor(int image) {
         this.image = image;
     }
 

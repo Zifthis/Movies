@@ -9,26 +9,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="8dp"
         android:background="@drawable/round_corner_top"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_width="200dp"
+            android:layout_height="270dp"
             android:layout_gravity="center"
+            android:layout_marginTop="14dp"
             android:layout_margin="8dp"
             android:layout_marginBottom="10dp"
             app:cardCornerRadius="10dp">
 
             <ImageView
-                android:id="@+id/poster"
+                android:id="@+id/cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/placeholder" />
-
         </androidx.cardview.widget.CardView>
+
 
 
         <TextView
@@ -124,20 +125,20 @@
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
-            android:layout_height="270dp"
+            android:layout_width="match_parent"
+            android:layout_height="185dp"
             android:layout_gravity="center"
-            android:layout_marginTop="14dp"
             android:layout_margin="8dp"
             android:layout_marginBottom="10dp"
             app:cardCornerRadius="10dp">
 
             <ImageView
-                android:id="@+id/cover"
+                android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/placeholder" />
+
         </androidx.cardview.widget.CardView>
 
 

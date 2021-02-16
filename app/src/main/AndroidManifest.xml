@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movies">
         <activity
-            android:name=".HomeActivity"
-            android:theme="@style/Theme.Movies.NoActionBar" />
+            android:name=".HomeActivity"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

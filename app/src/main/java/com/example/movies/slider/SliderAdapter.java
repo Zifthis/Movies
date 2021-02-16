@@ -17,11 +17,11 @@ import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder> {
 
-    private List<SliderItem> sliderItemList;
+    private List<SliderConstructor> sliderConstructorList;
     private ViewPager2 viewPager2;
 
-    public SliderAdapter(List<SliderItem> sliderItemList, ViewPager2 viewPager2) {
-        this.sliderItemList = sliderItemList;
+    public SliderAdapter(List<SliderConstructor> sliderConstructorList, ViewPager2 viewPager2) {
+        this.sliderConstructorList = sliderConstructorList;
         this.viewPager2 = viewPager2;
     }
 
@@ -36,15 +36,15 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
-        holder.setImage(sliderItemList.get(position));
-        if(position == sliderItemList.size()-2){
+        holder.setImage(sliderConstructorList.get(position));
+        if(position == sliderConstructorList.size()-2){
             viewPager2.post(runnable);
         }
     }
 
     @Override
     public int getItemCount() {
-        return sliderItemList.size();
+        return sliderConstructorList.size();
     }
 
     class SliderViewHolder extends RecyclerView.ViewHolder {
@@ -55,17 +55,17 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             imageView = itemView.findViewById(R.id.imageSlide);
         }
 
-        void setImage(SliderItem sliderItem) {
+        void setImage(SliderConstructor sliderConstructor) {
 
 
-            imageView.setImageResource(sliderItem.getImage());
+            imageView.setImageResource(sliderConstructor.getImage());
         }
     }
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            sliderItemList.addAll(sliderItemList);
+            sliderConstructorList.addAll(sliderConstructorList);
             notifyDataSetChanged();
         }
     };
