@@ -54,7 +54,6 @@ public class SimilarMovies extends AppCompatActivity {
 
         getSimilarMovies();
 
-        System.out.println(id);
 
         swipeRefreshLayout = findViewById(R.id.swipe_similar);
         swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
