@@ -16,11 +16,9 @@
         app:title="Movie app"
         app:titleTextColor="@color/txt_color" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/round_corner_bot">
 
         <androidx.viewpager2.widget.ViewPager2
@@ -30,12 +28,19 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="0">
+            android:layout_weight="0" />
 
-        </androidx.viewpager2.widget.ViewPager2>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layoutIndicators"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="15dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -67,6 +72,7 @@
         android:layout_margin="3dp"
         android:layout_weight="0"
         android:background="@color/bg_main"
+        android:paddingBottom="10dp"
         app:itemIconSize="38sp"
         app:itemIconTint="@drawable/bottom_navigation_selector"
         app:itemTextColor="@color/white"

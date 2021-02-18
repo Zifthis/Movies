@@ -2,11 +2,8 @@ package com.example.movies;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -15,7 +12,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.example.movies.slider.SliderAdapter;
 import com.example.movies.slider.SliderConstructor;
@@ -23,16 +22,16 @@ import com.example.movies.ui.popular.PopularFragment;
 import com.example.movies.ui.toprated.TopRatedFragment;
 import com.example.movies.ui.upcoming.UpcomingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ViewPager2 viewPager2;
-    private Handler slideHandler = new Handler();
-    private Fragment selectedFragment;
-
+    private ViewPager2 viewPagerHolder;
+    private final Handler slideHandler = new Handler();
+    private LinearLayout layoutOnBoardingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +46,19 @@ public class HomeActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TopRatedFragment()).commit();
 
 
-        viewPager2 = findViewById(R.id.viewpagerSlider);
+        viewPagerHolder = findViewById(R.id.viewpagerSlider);
+        layoutOnBoardingIndicator = findViewById(R.id.layoutIndicators);
 
+
+        setupSlider();
+        setupIndicator();
+
+
+    }
+
+    private void setupSlider() {
         List<SliderConstructor> sliderConstructors = new ArrayList<>();
+
         sliderConstructors.add(new SliderConstructor(R.drawable.hbomax));
         sliderConstructors.add(new SliderConstructor(R.drawable.netflix));
         sliderConstructors.add(new SliderConstructor(R.drawable.disney));
@@ -60,12 +69,14 @@ public class HomeActivity extends AppCompatActivity {
         sliderConstructors.add(new SliderConstructor(R.drawable.youtubetv));
         sliderConstructors.add(new SliderConstructor(R.drawable.primevideo));
 
-        viewPager2.setAdapter(new SliderAdapter(sliderConstructors, viewPager2));
+        viewPagerHolder.setAdapter(new SliderAdapter(sliderConstructors, viewPagerHolder));
 
-        viewPager2.setClipToPadding(false);
-        viewPager2.setClipChildren(false);
-        viewPager2.setOffscreenPageLimit(3);
-        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        viewPagerHolder.setClipToPadding(false);
+        viewPagerHolder.setClipChildren(false);
+        viewPagerHolder.setOffscreenPageLimit(3);
+        viewPagerHolder.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         compositePageTransformer.addTransformer(new MarginPageTransformer(40));
@@ -76,9 +87,10 @@ public class HomeActivity extends AppCompatActivity {
                 page.setScaleY(0.85f + r * 0.15f);
             }
         });
-        viewPager2.setPageTransformer(compositePageTransformer);
+        viewPagerHolder.setPageTransformer(compositePageTransformer);
 
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+
+        viewPagerHolder.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
@@ -86,18 +98,61 @@ public class HomeActivity extends AppCompatActivity {
                 slideHandler.postDelayed(sliderRunnable, 6000);
             }
         });
+
+
+    }
+
+    private void setupIndicator() {
+        RoundedImageView[] indicators = new RoundedImageView[viewPagerHolder.getAdapter().getItemCount()];
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(8, 0, 0, 0);
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i] = new RoundedImageView(getApplicationContext());
+            indicators[i].setImageDrawable(ContextCompat.getDrawable(
+                    getApplicationContext(),
+                    R.drawable.onboarding_indicator_inactive
+            ));
+            indicators[i].setLayoutParams(layoutParams);
+            layoutOnBoardingIndicator.addView(indicators[i]);
+        }
+    }
+
+    private void setCurrentIndicator(int index) {
+        int childCount = layoutOnBoardingIndicator.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            RoundedImageView roundedImageView = (RoundedImageView) layoutOnBoardingIndicator.getChildAt(i);
+            if (i == index) {
+                roundedImageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                                getApplicationContext(),
+                                R.drawable.onboarding_indicator_active
+                        )
+                );
+            } else {
+                roundedImageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                                getApplicationContext(),
+                                R.drawable.onboarding_indicator_inactive
+                        )
+                );
+            }
+        }
     }
 
     private Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
+            viewPagerHolder.setCurrentItem(viewPagerHolder.getCurrentItem() + 1);
+            setCurrentIndicator(viewPagerHolder.getCurrentItem());
         }
     };
 
+
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
 
-        selectedFragment = null;
+        Fragment selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();
@@ -120,12 +175,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         slideHandler.removeCallbacks(sliderRunnable);
+        setCurrentIndicator(viewPagerHolder.getCurrentItem());
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
         slideHandler.postDelayed(sliderRunnable, 2000);
+        setCurrentIndicator(viewPagerHolder.getCurrentItem());
     }
 
 

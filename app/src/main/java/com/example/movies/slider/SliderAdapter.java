@@ -20,9 +20,11 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     private List<SliderConstructor> sliderConstructorList;
     private ViewPager2 viewPager2;
 
+
     public SliderAdapter(List<SliderConstructor> sliderConstructorList, ViewPager2 viewPager2) {
         this.sliderConstructorList = sliderConstructorList;
         this.viewPager2 = viewPager2;
+
     }
 
     @NonNull
@@ -55,6 +57,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             imageView = itemView.findViewById(R.id.imageSlide);
         }
 
+
         void setImage(SliderConstructor sliderConstructor) {
 
 
@@ -69,4 +72,5 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             notifyDataSetChanged();
         }
     };
+
 }

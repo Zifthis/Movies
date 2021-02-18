@@ -12,5 +12,5 @@
     <color name="bg_main">#14151a</color>
     <color name="card_color">#1e2026</color>
     <color name="icon_notselected">#757575</color>
-
+    <color name="colorOnBoardingIndicator">#757582</color>
 </resources>
