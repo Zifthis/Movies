@@ -31,7 +31,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private ViewPager2 viewPagerHolder;
     private final Handler slideHandler = new Handler();
-    private LinearLayout layoutOnBoardingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +46,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
         viewPagerHolder = findViewById(R.id.viewpagerSlider);
-        layoutOnBoardingIndicator = findViewById(R.id.layoutIndicators);
-
 
         setupSlider();
-        setupIndicator();
 
 
     }
@@ -102,50 +98,11 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void setupIndicator() {
-        RoundedImageView[] indicators = new RoundedImageView[viewPagerHolder.getAdapter().getItemCount()];
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        layoutParams.setMargins(8, 0, 0, 0);
-        for (int i = 0; i < indicators.length; i++) {
-            indicators[i] = new RoundedImageView(getApplicationContext());
-            indicators[i].setImageDrawable(ContextCompat.getDrawable(
-                    getApplicationContext(),
-                    R.drawable.onboarding_indicator_inactive
-            ));
-            indicators[i].setLayoutParams(layoutParams);
-            layoutOnBoardingIndicator.addView(indicators[i]);
-        }
-    }
-
-    private void setCurrentIndicator(int index) {
-        int childCount = layoutOnBoardingIndicator.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            RoundedImageView roundedImageView = (RoundedImageView) layoutOnBoardingIndicator.getChildAt(i);
-            if (i == index) {
-                roundedImageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                getApplicationContext(),
-                                R.drawable.onboarding_indicator_active
-                        )
-                );
-            } else {
-                roundedImageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                getApplicationContext(),
-                                R.drawable.onboarding_indicator_inactive
-                        )
-                );
-            }
-        }
-    }
 
     private Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
             viewPagerHolder.setCurrentItem(viewPagerHolder.getCurrentItem() + 1);
-            setCurrentIndicator(viewPagerHolder.getCurrentItem());
         }
     };
 
@@ -175,15 +132,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         slideHandler.removeCallbacks(sliderRunnable);
-        setCurrentIndicator(viewPagerHolder.getCurrentItem());
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
         slideHandler.postDelayed(sliderRunnable, 2000);
-        setCurrentIndicator(viewPagerHolder.getCurrentItem());
     }
-
 
 }
