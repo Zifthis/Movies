@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.movies.slider.SliderAdapter;
 import com.example.movies.slider.SliderConstructor;
@@ -31,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ViewPager2 viewPagerHolder;
     private final Handler slideHandler = new Handler();
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,11 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TopRatedFragment()).commit();
+
+
+        textView = findViewById(R.id.nav_location_txt);
+
+
 
 
         viewPagerHolder = findViewById(R.id.viewpagerSlider);
@@ -113,12 +120,15 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();
+                textView.setText("Top rated movies");
                 break;
             case R.id.navigation_popular:
                 selectedFragment = new PopularFragment();
+                textView.setText("Popular Movies");
                 break;
             case R.id.navigation_upcoming:
                 selectedFragment = new UpcomingFragment();
+                textView.setText("Upcoming Movies");
                 break;
         }
         assert selectedFragment != null;

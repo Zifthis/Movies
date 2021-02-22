@@ -1,6 +1,7 @@
 package com.example.movies.details;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -31,13 +33,14 @@ public class MovieDetails extends AppCompatActivity {
 
     private Result result;
     MovieAdapter adapter;
+    private int movidIdInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
 
-        getSupportActionBar().setTitle("Detail View");
+        getSupportActionBar().setTitle("Movie Details");
 
 
         String imgPoster, imgCover;
@@ -56,7 +59,7 @@ public class MovieDetails extends AppCompatActivity {
 
             result = getIntent().getParcelableExtra("result");
 
-
+            movidIdInt = result.getId();
 
             imgPoster = result.getPosterPath();
             String pathPoster = "https://image.tmdb.org/t/p/w400" + imgPoster;
@@ -83,9 +86,12 @@ public class MovieDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent2nd = new Intent(MovieDetails.this, SimilarMovies.class);
-                intent2nd.putExtra("resultSimilar", result.getId());
-                startActivity(intent2nd);
+
+
+                Intent i = new Intent(MovieDetails.this, SimilarMovies.class);
+                i.putExtra("movie_id", movidIdInt);
+                startActivity(i);
+
 
             }
         });

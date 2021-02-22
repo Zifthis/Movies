@@ -11,6 +11,6 @@ import retrofit2.http.Query;
 public interface SimilarMoviesEndPoint {
 
     @GET("movie/{movie_id}/similar")
-    Call<Similar> getSimilar(@Path("movie_id") String idMovie, @Query("api_key") String apiKey);
+    Call<Similar> getSimilar(@Path("movie_id") int idMovie, @Query("api_key") String apiKey);
 
 }

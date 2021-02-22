@@ -1,9 +1,8 @@
 package com.example.movies.details;
 
+
 import android.os.Bundle;
-import android.widget.Adapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,9 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
 import com.example.movies.R;
-import com.example.movies.adapter.MovieAdapter;
+import com.example.movies.adapter.SimilarAdapter;
 import com.example.movies.model.Result;
 import com.example.movies.model.Similar;
 import com.example.movies.rest.APIClient;
@@ -28,51 +26,50 @@ import retrofit2.Response;
 
 public class SimilarMovies extends AppCompatActivity {
 
-    private int intKey = R.string.api_key;
-    private String apiKey = Integer.toString(intKey);
-    private int recivedMovieId;
+    private int idMovie;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private RecyclerView recyclerView;
-    private String id;
-
+    private RecyclerView recyclerView ;
+    private SimilarAdapter similarAdapter;
     private ArrayList<Result> similarResult;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.similar_movie);
+        getSupportActionBar().setTitle("Similar Movies");
 
-        Bundle extras = getIntent().getExtras();
-        recivedMovieId = extras.getInt("resultSimilar");
 
-        id = String.valueOf(recivedMovieId);
+        idMovie = getIntent().getIntExtra("movie_id", 0);
 
-        recyclerView = findViewById(R.id.similar_recycler);
+
+        recyclerView = findViewById(R.id.similar_recylcer);
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(SimilarMovies.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
-
-        getSimilarMovies();
 
 
         swipeRefreshLayout = findViewById(R.id.swipe_similar);
         swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
                 android.R.color.black,
                 android.R.color.holo_orange_light);
-                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(() -> {
+                    getSimilarMovies();
+                    swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(getApplicationContext(), "Refreshed", Toast.LENGTH_LONG).show();
+                }, 1500);
+            }
+        });
 
-                        getSimilarMovies();
-
-                    }
-                });
-
+        getSimilarMovies();
     }
+
 
     public void getSimilarMovies() {
         SimilarMoviesEndPoint similarMoviesEndPoint = APIClient.getClient().create(SimilarMoviesEndPoint.class);
-        Call<Similar> call = similarMoviesEndPoint.getSimilar(apiKey, id);
+        Call<Similar> call = similarMoviesEndPoint.getSimilar(idMovie, this.getString(R.string.api_key));
         call.enqueue(new Callback<Similar>() {
             @Override
             public void onResponse(Call<Similar> call, Response<Similar> response) {
@@ -80,10 +77,9 @@ public class SimilarMovies extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Similar similar = response.body();
                     similarResult = (ArrayList<Result>) similar.getResults();
-                    recyclerView.setAdapter(new MovieAdapter(getApplicationContext(), similarResult));
-
+                    similarAdapter = new SimilarAdapter(getApplicationContext(), similarResult);
+                    recyclerView.setAdapter(similarAdapter);
                 }
-
             }
 
             @Override
@@ -92,5 +88,4 @@ public class SimilarMovies extends AppCompatActivity {
             }
         });
     }
-
 }

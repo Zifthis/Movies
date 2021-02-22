@@ -126,7 +126,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         private final TextView originalTitleView;
         private final ImageView shareBnt;
 
-
         public MovieViewHolder(View itemView) {
             super(itemView);
 
@@ -137,6 +136,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             ratingView = itemView.findViewById(R.id.ratingMovieTxt);
             releasedateView = itemView.findViewById(R.id.releasedateTxt);
             originalTitleView = itemView.findViewById(R.id.originalTitleTxt);
+
 
             itemView.setOnClickListener(v -> {
                 int adapterPosition = getAdapterPosition();
@@ -154,8 +154,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         }
 
-
     }
-
 
 }
