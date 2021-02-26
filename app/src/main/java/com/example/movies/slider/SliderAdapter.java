@@ -1,30 +1,35 @@
 package com.example.movies.slider;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
-
+import com.bumptech.glide.Glide;
 import com.example.movies.R;
+import com.example.movies.model.Result;
 import com.makeramen.roundedimageview.RoundedImageView;
-
 import java.util.List;
+
+
 
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder> {
 
-    private List<SliderConstructor> sliderConstructorList;
+    private Context context;
+    private List<Result> sliderConstructorList;
     private ViewPager2 viewPager2;
 
 
-    public SliderAdapter(List<SliderConstructor> sliderConstructorList, ViewPager2 viewPager2) {
+    public SliderAdapter(Context context, List<Result> sliderConstructorList, ViewPager2 viewPager2) {
+        this.context = context;
         this.sliderConstructorList = sliderConstructorList;
         this.viewPager2 = viewPager2;
-
     }
 
     @NonNull
@@ -38,8 +43,16 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
-        holder.setImage(sliderConstructorList.get(position));
-        if(position == sliderConstructorList.size()-2){
+
+
+        String imagePath = "https://image.tmdb.org/t/p/w400" + sliderConstructorList.get(position).getBackdropPath();
+        Glide.with(context)
+                .load(imagePath)
+                .placeholder(R.drawable.placeholder)
+                .into(holder.imageView);
+        holder.textView.setText(sliderConstructorList.get(position).getTitle());
+
+        if (position == sliderConstructorList.size() - 2) {
             viewPager2.post(runnable);
         }
     }
@@ -51,18 +64,14 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     class SliderViewHolder extends RecyclerView.ViewHolder {
         private RoundedImageView imageView;
+        private TextView textView;
 
         SliderViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageSlide);
+            textView = itemView.findViewById(R.id.slicer_title);
         }
 
-
-        void setImage(SliderConstructor sliderConstructor) {
-
-
-            imageView.setImageResource(sliderConstructor.getImage());
-        }
     }
 
     private Runnable runnable = new Runnable() {

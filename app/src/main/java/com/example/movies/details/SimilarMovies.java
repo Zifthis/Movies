@@ -36,7 +36,7 @@ import retrofit2.Response;
 
 public class SimilarMovies extends BottomSheetDialogFragment {
 
-    //private ArrayList<Result> similarResult;
+
     private List<Result> mItemObjects;
 
     public SimilarMovies(List<Result> mItemObjects) {

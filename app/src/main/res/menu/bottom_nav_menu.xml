@@ -12,8 +12,8 @@
         android:title="@string/title_popular" />
 
     <item
-        android:id="@+id/navigation_upcoming"
-        android:icon="@mipmap/ic_upcoming"
-        android:title="@string/title_upcoming" />
+        android:id="@+id/navigation_discover"
+        android:icon="@mipmap/ic_discover"
+        android:title="@string/title_discover" />
 
 </menu>

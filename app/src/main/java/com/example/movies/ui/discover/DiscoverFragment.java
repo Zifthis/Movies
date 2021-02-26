@@ -1,4 +1,4 @@
-package com.example.movies.ui.upcoming;
+package com.example.movies.ui.discover;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,9 +16,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
+import com.example.movies.model.Discover;
 import com.example.movies.model.Result;
 import com.example.movies.model.Upcoming;
 import com.example.movies.rest.APIClient;
+import com.example.movies.rest.DiscoverMoviesEndPoint;
 import com.example.movies.rest.UpcomingEndPoint;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private ArrayList<Result> resultsUpcoming;
@@ -38,9 +40,9 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-        root = inflater.inflate(R.layout.fragment_upcoming, container, false);
+        root = inflater.inflate(R.layout.fragment_discover, container, false);
 
-        swipeRefreshLayout = root.findViewById(R.id.swipe_upcoming);
+        swipeRefreshLayout = root.findViewById(R.id.swipe_discover);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
                 android.R.color.black,
@@ -57,7 +59,7 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
         super.onViewCreated(view, savedInstanceState);
 
 
-        recyclerView = view.findViewById(R.id.upcoming_recylcer);
+        recyclerView = view.findViewById(R.id.discover_recylcer);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -67,22 +69,22 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     public void getUpcomingMovies() {
-        UpcomingEndPoint upcomingEndPoint = APIClient.getClient().create(UpcomingEndPoint.class);
-        Call<Upcoming> call = upcomingEndPoint.getUpcoming(this.getString(R.string.api_key));
-        call.enqueue(new Callback<Upcoming>() {
+        DiscoverMoviesEndPoint discoverFragment = APIClient.getClient().create(DiscoverMoviesEndPoint.class);
+        Call<Discover> call = discoverFragment.getDiscoverMovies(this.getString(R.string.api_key));
+        call.enqueue(new Callback<Discover>() {
             @Override
-            public void onResponse(Call<Upcoming> call, Response<Upcoming> response) {
+            public void onResponse(Call<Discover> call, Response<Discover> response) {
 
                 if (response.isSuccessful()) {
-                    Upcoming upcoming = response.body();
-                    resultsUpcoming = (ArrayList<Result>) upcoming.getResults();
+                    Discover discover = response.body();
+                    resultsUpcoming = (ArrayList<Result>) discover.getResults();
                     recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsUpcoming));
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Upcoming> call, Throwable t) {
+            public void onFailure(Call<Discover> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -100,7 +102,6 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
         }, 1500);
 
     }
-
 
 
 }

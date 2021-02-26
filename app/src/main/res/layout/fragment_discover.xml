@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe_upcoming"
+    android:id="@+id/swipe_discover"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/upcoming_recylcer"
+        android:id="@+id/discover_recylcer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

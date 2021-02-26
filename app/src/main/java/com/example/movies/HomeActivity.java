@@ -2,7 +2,6 @@ package com.example.movies;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -12,27 +11,32 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.movies.model.Result;
+import com.example.movies.model.Upcoming;
+import com.example.movies.rest.APIClient;
+import com.example.movies.rest.UpcomingEndPoint;
 import com.example.movies.slider.SliderAdapter;
-import com.example.movies.slider.SliderConstructor;
 import com.example.movies.ui.popular.PopularFragment;
 import com.example.movies.ui.toprated.TopRatedFragment;
-import com.example.movies.ui.upcoming.UpcomingFragment;
+import com.example.movies.ui.discover.DiscoverFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
     private ViewPager2 viewPagerHolder;
     private final Handler slideHandler = new Handler();
     private TextView textView;
+    private List<Result> discoverListResult = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,6 @@ public class HomeActivity extends AppCompatActivity {
         textView = findViewById(R.id.nav_location_txt);
 
 
-
-
         viewPagerHolder = findViewById(R.id.viewpagerSlider);
 
         setupSlider();
@@ -60,48 +62,51 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupSlider() {
-        List<SliderConstructor> sliderConstructors = new ArrayList<>();
-
-        sliderConstructors.add(new SliderConstructor(R.drawable.hbomax));
-        sliderConstructors.add(new SliderConstructor(R.drawable.netflix));
-        sliderConstructors.add(new SliderConstructor(R.drawable.disney));
-        sliderConstructors.add(new SliderConstructor(R.drawable.curosity));
-        sliderConstructors.add(new SliderConstructor(R.drawable.fubotv));
-        sliderConstructors.add(new SliderConstructor(R.drawable.hulu));
-        sliderConstructors.add(new SliderConstructor(R.drawable.vrv));
-        sliderConstructors.add(new SliderConstructor(R.drawable.youtubetv));
-        sliderConstructors.add(new SliderConstructor(R.drawable.primevideo));
-
-        viewPagerHolder.setAdapter(new SliderAdapter(sliderConstructors, viewPagerHolder));
-
-
-        viewPagerHolder.setClipToPadding(false);
-        viewPagerHolder.setClipChildren(false);
-        viewPagerHolder.setOffscreenPageLimit(3);
-        viewPagerHolder.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-
-        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+        UpcomingEndPoint upcomingEndPoint = APIClient.getClient().create(UpcomingEndPoint.class);
+        Call<Upcoming> call = upcomingEndPoint.getUpcoming(this.getString(R.string.api_key));
+        call.enqueue(new Callback<Upcoming>() {
             @Override
-            public void transformPage(@NonNull View page, float position) {
-                float r = 1 - Math.abs(position);
-                page.setScaleY(0.85f + r * 0.15f);
+            public void onResponse(Call<Upcoming> call, Response<Upcoming> response) {
+
+                Upcoming upcoming = response.body();
+
+                if (upcoming != null && upcoming.getResults() != null) {
+                    discoverListResult = upcoming.getResults();
+                    viewPagerHolder.setAdapter(new SliderAdapter(HomeActivity.this, discoverListResult, viewPagerHolder));
+                    viewPagerHolder.setClipToPadding(false);
+                    viewPagerHolder.setClipChildren(false);
+                    viewPagerHolder.setOffscreenPageLimit(3);
+                    viewPagerHolder.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+
+                    CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+                    compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+                    compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+                        @Override
+                        public void transformPage(@NonNull View page, float position) {
+                            float r = 1 - Math.abs(position);
+                            page.setScaleY(0.85f + r * 0.15f);
+                        }
+                    });
+                    viewPagerHolder.setPageTransformer(compositePageTransformer);
+
+
+                    viewPagerHolder.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            super.onPageSelected(position);
+                            slideHandler.removeCallbacks(sliderRunnable);
+                            slideHandler.postDelayed(sliderRunnable, 6000);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Upcoming> call, Throwable t) {
+                t.printStackTrace();
             }
         });
-        viewPagerHolder.setPageTransformer(compositePageTransformer);
-
-
-        viewPagerHolder.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                slideHandler.removeCallbacks(sliderRunnable);
-                slideHandler.postDelayed(sliderRunnable, 6000);
-            }
-        });
-
 
     }
 
@@ -126,9 +131,9 @@ public class HomeActivity extends AppCompatActivity {
                 selectedFragment = new PopularFragment();
                 textView.setText("Popular Movies");
                 break;
-            case R.id.navigation_upcoming:
-                selectedFragment = new UpcomingFragment();
-                textView.setText("Upcoming Movies");
+            case R.id.navigation_discover:
+                selectedFragment = new DiscoverFragment();
+                textView.setText("Discover Movies");
                 break;
         }
         assert selectedFragment != null;
