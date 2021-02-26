@@ -2,6 +2,7 @@ package com.example.movies.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.movies.HomeActivity;
 import com.example.movies.R;
 import com.example.movies.details.MovieDetails;
 import com.example.movies.details.SimilarMovies;
@@ -75,6 +77,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.shareBnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Vibrator topV = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                topV.vibrate(50);
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_TEXT,"Check This Movie Out: \n" +
                         holder.titleTextView.getText() +

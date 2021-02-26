@@ -8,8 +8,10 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -125,15 +127,21 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();
-                textView.setText("Top rated movies");
+                textView.setText("Top Rated Movies");
+                Vibrator topV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                topV.vibrate(50);
                 break;
             case R.id.navigation_popular:
                 selectedFragment = new PopularFragment();
                 textView.setText("Popular Movies");
+                Vibrator popularV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                popularV.vibrate(50);
                 break;
             case R.id.navigation_discover:
                 selectedFragment = new DiscoverFragment();
                 textView.setText("Discover Movies");
+                Vibrator discoverV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                discoverV.vibrate(50);
                 break;
         }
         assert selectedFragment != null;

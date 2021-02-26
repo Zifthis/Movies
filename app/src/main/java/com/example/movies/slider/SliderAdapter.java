@@ -45,7 +45,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
 
 
-        String imagePath = "https://image.tmdb.org/t/p/w400" + sliderConstructorList.get(position).getBackdropPath();
+        String imagePath = "https://image.tmdb.org/t/p/w400" + sliderConstructorList.get(position).getPosterPath();
         Glide.with(context)
                 .load(imagePath)
                 .placeholder(R.drawable.placeholder)
