@@ -3,9 +3,11 @@ package com.example.movies.details;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,11 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
+import com.example.movies.adapter.SimilarAdapter;
 import com.example.movies.model.PopularMovies;
 import com.example.movies.model.Result;
 import com.example.movies.model.Similar;
+import com.example.movies.model.TopRated;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.SimilarMoviesEndPoint;
+import com.example.movies.rest.TopRatedMoviesEndPoint;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +38,15 @@ public class MovieDetails extends AppCompatActivity {
 
 
     private Result result;
-    MovieAdapter adapter;
-    private int movidIdInt;
+    private MovieAdapter adapter;
+    int movieId;
+    private List<Result> similarListResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
-
         getSupportActionBar().setTitle("Movie Details");
-
 
         String imgPoster, imgCover;
         ImageView coverImg = findViewById(R.id.poster);
@@ -59,7 +64,7 @@ public class MovieDetails extends AppCompatActivity {
 
             result = getIntent().getParcelableExtra("result");
 
-            movidIdInt = result.getId();
+            movieId = result.getId();
 
             imgPoster = result.getPosterPath();
             String pathPoster = "https://image.tmdb.org/t/p/w400" + imgPoster;
@@ -85,17 +90,34 @@ public class MovieDetails extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-                Intent i = new Intent(MovieDetails.this, SimilarMovies.class);
-                i.putExtra("movie_id", movidIdInt);
-                startActivity(i);
-
+                getApi();
 
             }
         });
 
+    }
+
+    private void getApi() {
+        SimilarMoviesEndPoint similarMoviesEndPoint = APIClient.getClient().create(SimilarMoviesEndPoint.class);
+        Call<Similar> call = similarMoviesEndPoint.getSimilar(movieId, this.getString(R.string.api_key));
+        call.enqueue(new Callback<Similar>() {
+            @Override
+            public void onResponse(Call<Similar> call, Response<Similar> response) {
+
+                Similar similar = response.body();
+
+                if (similar != null && similar.getResults() != null) {
+                    similarListResult = similar.getResults();
+                    SimilarMovies similarMovies = new SimilarMovies(similarListResult);
+                    similarMovies.show(getSupportFragmentManager(), similarMovies.getTag());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Similar> call, Throwable t) {
+                Toast.makeText(MovieDetails.this, "Something went wrong!\n" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

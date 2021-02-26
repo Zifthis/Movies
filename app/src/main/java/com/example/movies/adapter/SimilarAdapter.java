@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,17 +13,17 @@ import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.model.Result;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarViewHolder> {
 
+    private Context context;
+    private List<Result> mItemObjectList;
 
-    private final Context context;
-    private final ArrayList<Result> resultArrayList;
 
-    public SimilarAdapter(Context context, ArrayList<Result> resultArrayList) {
+    public SimilarAdapter(Context context, List<Result> mItemObjectList) {
         this.context = context;
-        this.resultArrayList = resultArrayList;
+        this.mItemObjectList = mItemObjectList;
     }
 
     @Override
@@ -36,21 +35,28 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
     @Override
     public void onBindViewHolder(SimilarViewHolder holder, int position) {
 
-        String imagePath = "https://image.tmdb.org/t/p/w400" + resultArrayList.get(position).getPosterPath();
+        Result result = mItemObjectList.get(position);
+        if(result == null){
+            return;
+        }
+        String imagePath = "https://image.tmdb.org/t/p/w400" + result.getPosterPath();
         Glide.with(context)
                 .load(imagePath)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.movieImageView);
-        holder.titleTextView.setText(resultArrayList.get(position).getTitle());
-        holder.ratingView.setText(resultArrayList.get(position).getVoteAverage().toString());
-        holder.releasedateView.setText(MovieAdapter.dateAndTimeFormat(resultArrayList.get(position).getReleaseDate()));
-        holder.originalTitleView.setText(resultArrayList.get(position).getOriginalLanguage().toUpperCase());
+        holder.titleTextView.setText(result.getOriginalTitle());
+        holder.ratingView.setText(result.getVoteAverage().toString());
+        holder.releasedateView.setText(MovieAdapter.dateAndTimeFormat(result.getReleaseDate()));
+        holder.originalTitleView.setText(result.getOriginalLanguage().toUpperCase());
     }
 
 
     @Override
     public int getItemCount() {
-        return resultArrayList.size();
+        if (mItemObjectList != null) {
+            return mItemObjectList.size();
+        }
+        return 0;
     }
 
 
@@ -61,6 +67,7 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
         private final TextView ratingView;
         private final TextView releasedateView;
         private final TextView originalTitleView;
+
 
         public SimilarViewHolder(View itemView) {
             super(itemView);
