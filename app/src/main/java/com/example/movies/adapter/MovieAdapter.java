@@ -67,11 +67,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.ratingView.setText(resultArrayListList.get(position).getVoteAverage().toString());
         holder.releasedateView.setText(dateAndTimeFormat(resultArrayListList.get(position).getReleaseDate()));
         holder.originalTitleView.setText(resultArrayListList.get(position).getOriginalLanguage().toUpperCase());
-        holder.cardView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_animation));
-        holder.titleTextView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_animation));
-        holder.ratingView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_animation));
-        holder.releasedateView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_animation));
-        holder.originalTitleView.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_animation));
+        holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        holder.titleTextView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        holder.ratingView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        holder.releasedateView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        holder.originalTitleView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
 
         //share button
         holder.shareBnt.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +80,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 Vibrator topV = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 topV.vibrate(50);
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT,"Check This Movie Out: \n" +
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Check This Movie Out: \n" +
                         holder.titleTextView.getText() +
                         "\nRating: " +
                         holder.ratingView.getText() +
@@ -116,7 +116,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return resultArrayListList.size();
+        if (resultArrayListList != null) {
+            return resultArrayListList.size();
+        } else {
+            return 0;
+        }
     }
 
 

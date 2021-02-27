@@ -9,16 +9,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:background="@drawable/round_corner_top"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="200dp"
             android:layout_height="270dp"
             android:layout_gravity="center"
-            android:layout_marginTop="14dp"
             android:layout_margin="8dp"
+            android:layout_marginTop="14dp"
             android:layout_marginBottom="10dp"
             app:cardCornerRadius="10dp">
 
@@ -29,7 +29,6 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/placeholder" />
         </androidx.cardview.widget.CardView>
-
 
 
         <TextView
@@ -46,10 +45,10 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
             android:textColor="@color/white"
             android:textSize="25sp" />
 
@@ -67,9 +66,9 @@
             android:id="@+id/releasedate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:paddingLeft="18dp"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -87,9 +86,9 @@
             android:id="@+id/genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:paddingLeft="18dp"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -98,7 +97,7 @@
             android:layout_height="wrap_content"
             android:background="@color/card_color"
             android:padding="18dp"
-            android:text="Overview:"
+            android:text="Storyline:"
             android:textColor="@color/txt_color"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -107,12 +106,34 @@
             android:id="@+id/overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
             android:textColor="@color/white"
             android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/card_color"
+                android:padding="18dp"
+                android:text="The Cast:"
+                android:textColor="@color/txt_color"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cast_recylcer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -125,6 +146,7 @@
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="185dp"
             android:layout_gravity="center"
@@ -146,12 +168,12 @@
             android:id="@+id/btn_similar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:backgroundTint="@color/txt_color"
             android:text="Similar Movie"
-            android:layout_margin="8dp"
-            android:textStyle="bold"
             android:textColor="@color/bg_main"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </ScrollView>

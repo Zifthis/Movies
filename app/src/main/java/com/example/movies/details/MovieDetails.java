@@ -1,52 +1,54 @@
 package com.example.movies.details;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Movie;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
+import com.example.movies.adapter.CastAdapter;
 import com.example.movies.adapter.MovieAdapter;
-import com.example.movies.adapter.SimilarAdapter;
-import com.example.movies.model.PopularMovies;
+import com.example.movies.model.Cast;
+import com.example.movies.model.CastMovie;
 import com.example.movies.model.Result;
 import com.example.movies.model.Similar;
-import com.example.movies.model.TopRated;
 import com.example.movies.rest.APIClient;
+import com.example.movies.rest.CastMoviesEndPoint;
 import com.example.movies.rest.SimilarMoviesEndPoint;
-import com.example.movies.rest.TopRatedMoviesEndPoint;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.movies.R.color.txt_color;
+
 public class MovieDetails extends AppCompatActivity {
 
 
     private Result result;
     private MovieAdapter adapter;
+    private RecyclerView authorBar;
     int movieId;
     private List<Result> similarListResult;
+    private List<Cast> castList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
         getSupportActionBar().setTitle("Movie Details");
+
 
         String imgPoster, imgCover;
         ImageView coverImg = findViewById(R.id.poster);
@@ -90,14 +92,15 @@ public class MovieDetails extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getApi();
+                getApiSimilar();
 
             }
         });
 
+        init();
     }
 
-    private void getApi() {
+    private void getApiSimilar() {
         SimilarMoviesEndPoint similarMoviesEndPoint = APIClient.getClient().create(SimilarMoviesEndPoint.class);
         Call<Similar> call = similarMoviesEndPoint.getSimilar(movieId, this.getString(R.string.api_key));
         call.enqueue(new Callback<Similar>() {
@@ -119,5 +122,36 @@ public class MovieDetails extends AppCompatActivity {
             }
         });
     }
+
+    private void init() {
+        authorBar = findViewById(R.id.cast_recylcer);
+        getApiCast();
+    }
+
+    private void getApiCast() {
+        CastMoviesEndPoint castMoviesEndPoint = APIClient.getClient().create(CastMoviesEndPoint.class);
+        Call<CastMovie> call = castMoviesEndPoint.getCast(movieId, this.getString(R.string.api_key));
+        call.enqueue(new Callback<CastMovie>() {
+            @Override
+            public void onResponse(Call<CastMovie> call, Response<CastMovie> response) {
+
+                CastMovie castMovie = response.body();
+
+                if (castMovie != null && castMovie.getCast() != null) {
+                    castList = castMovie.getCast();
+                    CastAdapter castAdapter = new CastAdapter(castList, MovieDetails.this);
+                    authorBar.setAdapter(castAdapter);
+                    authorBar.setLayoutManager(new LinearLayoutManager(MovieDetails.this, RecyclerView.HORIZONTAL,false));
+                    authorBar.addItemDecoration(new CastDeco(12));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CastMovie> call, Throwable t) {
+                Toast.makeText(MovieDetails.this, "Something went wrong!\n" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
 }
