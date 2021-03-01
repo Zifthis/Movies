@@ -6,7 +6,7 @@
     android:adjustViewBounds="true">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/similarCard_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"

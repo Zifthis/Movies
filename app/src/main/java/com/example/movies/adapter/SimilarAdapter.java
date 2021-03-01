@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
+import com.example.movies.details.SimilarMoviesClicked;
 import com.example.movies.model.Result;
 
 import java.util.List;
@@ -19,11 +21,13 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
 
     private Context context;
     private List<Result> mItemObjectList;
+    private SimilarMoviesClicked similarMoviesClicked;
 
 
-    public SimilarAdapter(Context context, List<Result> mItemObjectList) {
+    public SimilarAdapter(Context context, List<Result> mItemObjectList, SimilarMoviesClicked similarMoviesClicked) {
         this.context = context;
         this.mItemObjectList = mItemObjectList;
+        this.similarMoviesClicked = similarMoviesClicked;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
     @Override
     public void onBindViewHolder(SimilarViewHolder holder, int position) {
 
-        Result result = mItemObjectList.get(position);
+        final Result result = mItemObjectList.get(position);
         if(result == null){
             return;
         }
@@ -48,6 +52,12 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
         holder.ratingView.setText(result.getVoteAverage().toString());
         holder.releasedateView.setText(MovieAdapter.dateAndTimeFormat(result.getReleaseDate()));
         holder.originalTitleView.setText(result.getOriginalLanguage().toUpperCase());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                similarMoviesClicked.movieClicked(result);
+            }
+        });
     }
 
 
@@ -67,11 +77,13 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
         private final TextView ratingView;
         private final TextView releasedateView;
         private final TextView originalTitleView;
+        private final CardView cardView;
 
 
         public SimilarViewHolder(View itemView) {
             super(itemView);
 
+            cardView = itemView.findViewById(R.id.similarCard_view);
             movieImageView = itemView.findViewById(R.id.similarMovieImage);
             titleTextView = itemView.findViewById(R.id.similarTitleMovie);
             ratingView = itemView.findViewById(R.id.similarRatingMovieTxt);

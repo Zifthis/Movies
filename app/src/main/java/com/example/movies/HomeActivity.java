@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,8 @@ import com.example.movies.ui.popular.PopularFragment;
 import com.example.movies.ui.toprated.TopRatedFragment;
 import com.example.movies.ui.discover.DiscoverFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Upcoming> call, Throwable t) {
+            public void onFailure(@NotNull Call<Upcoming> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -121,6 +124,7 @@ public class HomeActivity extends AppCompatActivity {
     };
 
 
+    @SuppressLint("NonConstantResourceId")
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
 
         Fragment selectedFragment = null;

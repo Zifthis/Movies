@@ -38,9 +38,11 @@ public class SimilarMovies extends BottomSheetDialogFragment {
 
 
     private List<Result> mItemObjects;
+    private SimilarMoviesClicked similarMoviesClicked;
 
-    public SimilarMovies(List<Result> mItemObjects) {
+    public SimilarMovies(List<Result> mItemObjects, SimilarMoviesClicked similarMoviesClicked) {
         this.mItemObjects = mItemObjects;
+        this.similarMoviesClicked = similarMoviesClicked;
     }
 
     @NonNull
@@ -56,12 +58,13 @@ public class SimilarMovies extends BottomSheetDialogFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvData.setLayoutManager(linearLayoutManager);
 
-        SimilarAdapter similarAdapter = new SimilarAdapter(getActivity(),mItemObjects);
+        SimilarAdapter similarAdapter = new SimilarAdapter(getActivity(), mItemObjects, new SimilarMoviesClicked() {
+            @Override
+            public void movieClicked(Result result){
+                similarMoviesClicked.movieClicked(result);
+            }
+        });
         rvData.setAdapter(similarAdapter);
-
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
-        rvData.addItemDecoration(itemDecoration);
-
 
         return bottomSheetDialog;
     }
