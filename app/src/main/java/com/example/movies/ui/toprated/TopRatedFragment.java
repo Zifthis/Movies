@@ -47,7 +47,7 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.toprated_recylcer);
+        recyclerView = view.findViewById(R.id.toprated_recycler);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);

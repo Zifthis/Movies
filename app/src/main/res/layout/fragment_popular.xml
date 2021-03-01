@@ -8,7 +8,7 @@
     tools:context=".ui.popular.PopularFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/popular_recylcer"
+        android:id="@+id/popular_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -37,17 +37,19 @@
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="12dp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
                 android:paddingBottom="5dp"
                 android:text="@string/title_movie_detials"
                 android:textColor="@color/txt_color"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cover"
                 app:layout_constraintTop_toBottomOf="@+id/poster"
-                tools:ignore="RtlSymmetry" />
+                tools:layout_editor_absoluteX="205dp" />
 
             <TextView
                 android:id="@+id/releasetxt"
@@ -55,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
-
+                android:text="@string/release_date"
                 android:textColor="@color/txt_color"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/title"
@@ -143,4 +145,5 @@
 
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

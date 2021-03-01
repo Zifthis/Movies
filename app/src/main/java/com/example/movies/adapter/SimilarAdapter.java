@@ -1,5 +1,6 @@
 package com.example.movies.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +16,15 @@ import com.example.movies.R;
 import com.example.movies.details.SimilarMoviesClicked;
 import com.example.movies.model.Result;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarViewHolder> {
 
-    private Context context;
-    private List<Result> mItemObjectList;
-    private SimilarMoviesClicked similarMoviesClicked;
+    private final Context context;
+    private final List<Result> mItemObjectList;
+    private final SimilarMoviesClicked similarMoviesClicked;
 
 
     public SimilarAdapter(Context context, List<Result> mItemObjectList, SimilarMoviesClicked similarMoviesClicked) {
@@ -30,14 +33,16 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
         this.similarMoviesClicked = similarMoviesClicked;
     }
 
+    @NotNull
     @Override
     public SimilarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_movie_list, parent, false);
         return new SimilarViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(SimilarViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull SimilarViewHolder holder, int position) {
 
         final Result result = mItemObjectList.get(position);
         if(result == null){
@@ -70,7 +75,7 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
     }
 
 
-    public class SimilarViewHolder extends RecyclerView.ViewHolder {
+    public static class SimilarViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView movieImageView;
         private final TextView titleTextView;

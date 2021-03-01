@@ -51,5 +51,6 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.github.jgabrielfreitas:BlurImageView:1.0.1'
 
 }

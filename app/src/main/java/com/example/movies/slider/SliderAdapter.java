@@ -21,9 +21,9 @@ import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder> {
 
-    private Context context;
-    private List<Result> sliderConstructorList;
-    private ViewPager2 viewPager2;
+    private final Context context;
+    private final List<Result> sliderConstructorList;
+    private final ViewPager2 viewPager2;
 
 
     public SliderAdapter(Context context, List<Result> sliderConstructorList, ViewPager2 viewPager2) {
@@ -59,12 +59,16 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     @Override
     public int getItemCount() {
-        return sliderConstructorList.size();
+        if(sliderConstructorList != null){
+            return sliderConstructorList.size();
+        }else{
+            return 0;
+        }
     }
 
-    class SliderViewHolder extends RecyclerView.ViewHolder {
-        private RoundedImageView imageView;
-        private TextView textView;
+    static class SliderViewHolder extends RecyclerView.ViewHolder {
+        private final RoundedImageView imageView;
+        private final TextView textView;
 
         SliderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,7 +78,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     }
 
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             sliderConstructorList.addAll(sliderConstructorList);

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CastDeco extends RecyclerView.ItemDecoration {
 
-    private int space;
+    private final int space;
 
     public CastDeco(int space) {
         this.space = space;

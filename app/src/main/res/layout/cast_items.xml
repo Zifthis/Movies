@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -24,6 +25,7 @@
                 android:id="@+id/cast_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_foreground" />
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
@@ -34,9 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingBottom="10dp"
-        android:text="name"
+        android:text="@string/name_author"
         android:textColor="@color/txt_color"
-        android:textSize="8dp" />
+        android:textSize="8sp"
+        tools:ignore="SmallSp" />
 
 
 </LinearLayout>

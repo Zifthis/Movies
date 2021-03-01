@@ -6,17 +6,16 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/txt_color"
         android:gravity="center"
         android:padding="15dp"
-        android:text="Similar Movies"
+        android:text="@string/similar_movies_bottom_sheet"
         android:textAllCaps="true"
         android:textColor="@color/bg_main"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <LinearLayout

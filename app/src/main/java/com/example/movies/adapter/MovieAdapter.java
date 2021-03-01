@@ -1,5 +1,6 @@
 package com.example.movies.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
@@ -26,6 +27,8 @@ import com.example.movies.model.Similar;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.SimilarMoviesEndPoint;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,11 +50,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
 
+    @NotNull
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movies_list, parent, false);
         return new MovieViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 
@@ -98,8 +103,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         String newDate = "";
         try {
             //timezone change
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat outDF = new SimpleDateFormat("dd.MM.yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat outDF = new SimpleDateFormat("dd.MM.yyyy");
             outDF.setTimeZone(TimeZone.getDefault());
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
             String changed = outDF.format(df.parse(date));
@@ -122,7 +127,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             return 0;
         }
     }
-
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 

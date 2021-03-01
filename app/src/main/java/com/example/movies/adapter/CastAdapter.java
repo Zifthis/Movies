@@ -19,8 +19,8 @@ import java.util.List;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {
 
-    private List<Cast> castResultList;
-    private Context context;
+    private final List<Cast> castResultList;
+    private final Context context;
 
     public CastAdapter(List<Cast> castResultList, Context context) {
         this.castResultList = castResultList;
@@ -31,8 +31,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
     public CastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.cast_items,parent,false);
-        CastViewHolder castViewHolder = new CastViewHolder(view);
-        return castViewHolder;
+        return new CastViewHolder(view);
     }
 
     @Override
@@ -60,8 +59,8 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     public static class CastViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
-        private TextView textView;
+        private final ImageView imageView;
+        private final TextView textView;
 
         public CastViewHolder(View itemView) {
             super(itemView);

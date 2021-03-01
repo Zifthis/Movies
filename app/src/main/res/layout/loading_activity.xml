@@ -10,13 +10,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movie App"
-        android:textColor="@color/txt_color"
-        android:textSize="38sp"
-        android:textStyle="bold"
         android:gravity="center"
         android:paddingTop="25dp"
-        />
+        android:text="@string/movie_app_splash"
+        android:textColor="@color/txt_color"
+        android:textSize="38sp"
+        android:textStyle="bold" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
         android:layout_height="500dp"
@@ -27,23 +27,22 @@
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gif_img"
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"
             android:layout_height="match_parent"
             android:background="@color/bg_color"
+            android:scaleType="centerCrop"
             android:src="@drawable/kino_01" />
 
     </androidx.cardview.widget.CardView>
 
 
     <ProgressBar
-        android:layout_margin="40dp"
         android:id="@+id/progress_bar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_margin="40dp"
         android:scaleY="4" />
-
 
 
 </RelativeLayout>

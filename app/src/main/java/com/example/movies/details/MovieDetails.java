@@ -2,17 +2,17 @@ package com.example.movies.details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.adapter.CastAdapter;
@@ -24,9 +24,8 @@ import com.example.movies.model.Similar;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.CastMoviesEndPoint;
 import com.example.movies.rest.SimilarMoviesEndPoint;
-
+import org.jetbrains.annotations.NotNull;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,12 +42,13 @@ public class MovieDetails extends AppCompatActivity {
     private List<Cast> castList;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
-        getSupportActionBar().setTitle("Movie Details");
+        getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         Intent intent = getIntent();
         Button btn = findViewById(R.id.btn_similar);
@@ -80,8 +80,8 @@ public class MovieDetails extends AppCompatActivity {
         ImageView coverImg = findViewById(R.id.poster);
         ImageView posterImg = findViewById(R.id.cover);
         TextView titelTxt = findViewById(R.id.title);
-        TextView relasedateTxt = findViewById(R.id.releasedate);
-        TextView genersTxt = findViewById(R.id.genres);
+        TextView relasedateTxt = findViewById(R.id.datemovie);
+        TextView genersTxt = findViewById(R.id.geners);
         TextView overviewTxt = findViewById(R.id.overview);
 
 
@@ -100,7 +100,7 @@ public class MovieDetails extends AppCompatActivity {
 
 
         titelTxt.setText(result.getTitle());
-        relasedateTxt.setText(adapter.dateAndTimeFormat(result.getReleaseDate()));
+        relasedateTxt.setText(MovieAdapter.dateAndTimeFormat(result.getReleaseDate()));
         genersTxt.setText(result.getGenreIds().toString());
         overviewTxt.setText(result.getOverview());
     }
@@ -110,7 +110,7 @@ public class MovieDetails extends AppCompatActivity {
         Call<Similar> call = similarMoviesEndPoint.getSimilar(movieId, this.getString(R.string.api_key));
         call.enqueue(new Callback<Similar>() {
             @Override
-            public void onResponse(Call<Similar> call, Response<Similar> response) {
+            public void onResponse(@NotNull Call<Similar> call, @NotNull Response<Similar> response) {
 
                 Similar similar = response.body();
 
@@ -131,7 +131,7 @@ public class MovieDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Similar> call, Throwable t) {
+            public void onFailure(@NotNull Call<Similar> call, @NotNull Throwable t) {
                 Toast.makeText(MovieDetails.this, "Something went wrong!\n" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -147,7 +147,7 @@ public class MovieDetails extends AppCompatActivity {
         Call<CastMovie> call = castMoviesEndPoint.getCast(idMovie, this.getString(R.string.api_key));
         call.enqueue(new Callback<CastMovie>() {
             @Override
-            public void onResponse(Call<CastMovie> call, Response<CastMovie> response) {
+            public void onResponse(@NotNull Call<CastMovie> call, @NotNull Response<CastMovie> response) {
 
                 CastMovie castMovie = response.body();
 
@@ -161,7 +161,7 @@ public class MovieDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CastMovie> call, Throwable t) {
+            public void onFailure(@NotNull Call<CastMovie> call, @NotNull Throwable t) {
                 Toast.makeText(MovieDetails.this, "Something went wrong!\n" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

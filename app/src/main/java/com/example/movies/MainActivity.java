@@ -1,5 +1,6 @@
 package com.example.movies;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Timer timer;
     private int i = 0;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        ProgressBar progressbar = (ProgressBar) findViewById(R.id.progress_bar);
+        @SuppressLint("CutPasteId") ProgressBar progressbar = (ProgressBar) findViewById(R.id.progress_bar);
         int color = 0xFFf0b90b;
 
         progressbar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);

@@ -6,8 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Cast implements Parcelable
-{
+public class Cast implements Parcelable {
 
     @SerializedName("adult")
     @Expose
@@ -65,8 +64,7 @@ public class Cast implements Parcelable
             return (new Cast[size]);
         }
 
-    }
-            ;
+    };
 
     protected Cast(Parcel in) {
         this.adult = ((Boolean) in.readValue((Boolean.class.getClassLoader())));

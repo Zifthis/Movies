@@ -18,10 +18,8 @@ import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.model.Discover;
 import com.example.movies.model.Result;
-import com.example.movies.model.Upcoming;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.DiscoverMoviesEndPoint;
-import com.example.movies.rest.UpcomingEndPoint;
 
 import java.util.ArrayList;
 
@@ -59,7 +57,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         super.onViewCreated(view, savedInstanceState);
 
 
-        recyclerView = view.findViewById(R.id.discover_recylcer);
+        recyclerView = view.findViewById(R.id.discover_recycler);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);

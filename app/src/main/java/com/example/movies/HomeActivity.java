@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         Call<Upcoming> call = upcomingEndPoint.getUpcoming(this.getString(R.string.api_key));
         call.enqueue(new Callback<Upcoming>() {
             @Override
-            public void onResponse(Call<Upcoming> call, Response<Upcoming> response) {
+            public void onResponse(@NotNull Call<Upcoming> call, @NotNull Response<Upcoming> response) {
 
                 Upcoming upcoming = response.body();
 
@@ -108,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NotNull Call<Upcoming> call, Throwable t) {
+            public void onFailure(@NotNull Call<Upcoming> call, @NotNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -116,7 +116,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private Runnable sliderRunnable = new Runnable() {
+    private final Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
             viewPagerHolder.setCurrentItem(viewPagerHolder.getCurrentItem() + 1);
@@ -131,19 +131,19 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();
-                textView.setText("Top Rated Movies");
+                textView.setText(R.string.top_nav);
                 Vibrator topV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                 topV.vibrate(50);
                 break;
             case R.id.navigation_popular:
                 selectedFragment = new PopularFragment();
-                textView.setText("Popular Movies");
+                textView.setText(R.string.pop_nav);
                 Vibrator popularV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                 popularV.vibrate(50);
                 break;
             case R.id.navigation_discover:
                 selectedFragment = new DiscoverFragment();
-                textView.setText("Discover Movies");
+                textView.setText(R.string.disc_nav);
                 Vibrator discoverV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                 discoverV.vibrate(50);
                 break;

@@ -4,4 +4,20 @@
     <string name="title_popular">Popular</string>
     <string name="title_discover">Discover</string>
     <string name="api_key">fe3b8cf16d78a0e23f0c509d8c37caad</string>
+    <string name="top_nav">Top Rated Movies</string>
+    <string name="pop_nav">Popular Movies</string>
+    <string name="disc_nav">Discover Movies</string>
+    <string name="title_movie_detials">Title</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="name_author">name</string>
+    <string name="similar_movies_bottom_sheet">Similar Movies</string>
+    <string name="movie_title_image_item">Movie title</string>
+    <string name="movie_app_splash">Movie App</string>
+    <string name="cast">Cast</string>
+    <string name="storyline">Storyline</string>
+    <string name="similar_movie">Similar Movie</string>
+    <string name="release_date">Release date:</string>
+    <string name="release_date_list">Release Date:</string>
+    <string name="language_list">Language:</string>
 </resources>
