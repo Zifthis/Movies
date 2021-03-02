@@ -2,7 +2,9 @@ package com.example.movies;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -13,15 +15,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.movies.model.Result;
 import com.example.movies.model.Upcoming;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.UpcomingEndPoint;
-import com.example.movies.slider.SliderAdapter;
+import com.example.movies.adapter.SliderAdapter;
 import com.example.movies.ui.popular.PopularFragment;
 import com.example.movies.ui.toprated.TopRatedFragment;
 import com.example.movies.ui.discover.DiscoverFragment;
@@ -42,14 +51,15 @@ public class HomeActivity extends AppCompatActivity {
     private final Handler slideHandler = new Handler();
     private TextView textView;
     private List<Result> discoverListResult = new ArrayList<>();
+    private Fragment selectedFragment;
+    private boolean f1, f2, f3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getSupportActionBar().setTitle("Movie App");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
@@ -63,9 +73,66 @@ public class HomeActivity extends AppCompatActivity {
 
         setupSlider();
 
-
     }
 
+
+    //search
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                return true;
+            }
+        };
+        MenuItem searchItem = menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("Search Movie Title...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (MyApp.getInstance().getPopAdapter() != null) {
+                    MyApp.getInstance().getPopAdapter().getFilter().filter(query);
+                }
+                if (MyApp.getInstance().getDiscAdapter() != null) {
+                    MyApp.getInstance().getDiscAdapter().getFilter().filter(query);
+                }
+                if (MyApp.getInstance().getTopAdapter() != null) {
+                    MyApp.getInstance().getTopAdapter().getFilter().filter(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //called when you type each letter in search
+                if (MyApp.getInstance().getPopAdapter() != null) {
+                    MyApp.getInstance().getPopAdapter().getFilter().filter(newText);
+                }
+                if (MyApp.getInstance().getDiscAdapter() != null) {
+                    MyApp.getInstance().getDiscAdapter().getFilter().filter(newText);
+                }
+                if (MyApp.getInstance().getTopAdapter() != null) {
+                    MyApp.getInstance().getTopAdapter().getFilter().filter(newText);
+                }
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+    //slider
     private void setupSlider() {
         UpcomingEndPoint upcomingEndPoint = APIClient.getClient().create(UpcomingEndPoint.class);
         Call<Upcoming> call = upcomingEndPoint.getUpcoming(this.getString(R.string.api_key));
@@ -123,11 +190,11 @@ public class HomeActivity extends AppCompatActivity {
         }
     };
 
-
+    //nav bar
     @SuppressLint("NonConstantResourceId")
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
 
-        Fragment selectedFragment = null;
+        selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();

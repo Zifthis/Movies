@@ -1,4 +1,4 @@
-package com.example.movies.slider;
+package com.example.movies.adapter;
 
 
 import android.content.Context;

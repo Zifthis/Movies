@@ -14,12 +14,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.movies.HomeActivity;
+import com.example.movies.MyApp;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.model.Discover;
 import com.example.movies.model.Result;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.DiscoverMoviesEndPoint;
+import com.example.movies.ui.toprated.TopRatedFragment;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerView recyclerView;
     private ArrayList<Result> resultsUpcoming;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private MovieAdapter adapter;
     private View root;
 
     @Override
@@ -45,6 +49,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
                 android.R.color.black,
                 android.R.color.holo_orange_light);
+
 
         return root;
 
@@ -76,7 +81,13 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
                 if (response.isSuccessful()) {
                     Discover discover = response.body();
                     resultsUpcoming = (ArrayList<Result>) discover.getResults();
-                    recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsUpcoming));
+                    MyApp.getInstance().setMovieDiscover(resultsUpcoming);
+
+                    adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMovieDiscover());
+                    MyApp.getInstance().setDiscAdapter(adapter);
+                    recyclerView.setAdapter(adapter);
+
+                    //recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsUpcoming));
                 }
 
             }

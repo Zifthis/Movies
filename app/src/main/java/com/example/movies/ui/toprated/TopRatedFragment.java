@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.movies.HomeActivity;
+import com.example.movies.MyApp;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.model.Result;
@@ -31,13 +33,16 @@ import retrofit2.Response;
 public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
-    private ArrayList<Result> resultsTopRated;
+    private ArrayList<Result> resultsTopRated = new ArrayList<Result>();
     private SwipeRefreshLayout swipeRefreshLayout;
+    private MovieAdapter adapter;
     private View root;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_toprated, container, false);
+
+
         return root;
     }
 
@@ -46,6 +51,7 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
             @NonNull View view,
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         recyclerView = view.findViewById(R.id.toprated_recycler);
         recyclerView.setHasFixedSize(true);
@@ -59,7 +65,9 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
                 android.R.color.black,
                 android.R.color.holo_orange_light);
 
+
         getPopularMovies();
+
 
     }
 
@@ -69,12 +77,18 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
         call.enqueue(new Callback<TopRated>() {
             @Override
             public void onResponse(Call<TopRated> call, Response<TopRated> response) {
-
                 if (response.isSuccessful()) {
                     TopRated topRated = response.body();
                     resultsTopRated = (ArrayList<Result>) topRated.getResults();
+                    MyApp.getInstance().setMovieTopRated(resultsTopRated);
 
-                    recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsTopRated));
+
+                    adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMovieTopRated());
+                    MyApp.getInstance().setTopAdapter(adapter);
+                    recyclerView.setAdapter(adapter);
+
+
+                    //recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsTopRated));
                 }
 
             }

@@ -20,4 +20,5 @@
     <string name="release_date">Release date:</string>
     <string name="release_date_list">Release Date:</string>
     <string name="language_list">Language:</string>
+    <string name="search_bar_icon">Search</string>
 </resources>

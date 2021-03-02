@@ -13,4 +13,7 @@
     <color name="card_color">#1e2026</color>
     <color name="icon_notselected">#757575</color>
     <color name="colorOnBoardingIndicator">#757582</color>
+    <color name="color_background">#000</color>
+    <color name="color_font">#96979b</color>
+
 </resources>

@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,17 +40,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> implements Filterable {
 
     private final Context context;
     private final ArrayList<Result> resultArrayListList;
-
+    private ArrayList<Result> resultArrayListListFiltered;
 
     public MovieAdapter(Context context, ArrayList<Result> resultArrayListList) {
         this.context = context;
         this.resultArrayListList = resultArrayListList;
+        this.resultArrayListListFiltered = resultArrayListList;
     }
-
 
     @NotNull
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,17 +63,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 
 
-        String imagePath = "https://image.tmdb.org/t/p/w400" + resultArrayListList.get(position).getPosterPath();
+        String imagePath = "https://image.tmdb.org/t/p/w400" + resultArrayListListFiltered.get(position).getPosterPath();
         Glide.with(context)
                 .load(imagePath)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.movieImageView);
 
 
-        holder.titleTextView.setText(resultArrayListList.get(position).getTitle());
-        holder.ratingView.setText(resultArrayListList.get(position).getVoteAverage().toString());
-        holder.releasedateView.setText(dateAndTimeFormat(resultArrayListList.get(position).getReleaseDate()));
-        holder.originalTitleView.setText(resultArrayListList.get(position).getOriginalLanguage().toUpperCase());
+        holder.titleTextView.setText(resultArrayListListFiltered.get(position).getTitle());
+        holder.ratingView.setText(resultArrayListListFiltered.get(position).getVoteAverage().toString());
+        holder.releasedateView.setText(dateAndTimeFormat(resultArrayListListFiltered.get(position).getReleaseDate()));
+        holder.originalTitleView.setText(resultArrayListListFiltered.get(position).getOriginalLanguage().toUpperCase());
+
         holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
         holder.titleTextView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
         holder.ratingView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
@@ -121,11 +124,44 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        if (resultArrayListList != null) {
-            return resultArrayListList.size();
+        if (resultArrayListListFiltered != null) {
+            return resultArrayListListFiltered.size();
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String s = constraint.toString();
+                if(s.isEmpty()){
+                    resultArrayListListFiltered = resultArrayListList;
+                }else {
+                    ArrayList<Result> IsFiltered = new ArrayList<>();
+                    for(Result row : resultArrayListList){
+                        if(row.getTitle().toLowerCase().contains(s.toLowerCase())){
+                            IsFiltered.add(row);
+                        }
+                    }
+
+                    resultArrayListListFiltered = IsFiltered;
+
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = resultArrayListListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                resultArrayListListFiltered = (ArrayList<Result>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -155,7 +191,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
                 if (adapterPosition != RecyclerView.NO_POSITION) {
 
-                    Result resultPosition = resultArrayListList.get(adapterPosition);
+                    Result resultPosition = resultArrayListListFiltered.get(adapterPosition);
 
                     Intent intent = new Intent(context, MovieDetails.class);
                     intent.putExtra("result", resultPosition);

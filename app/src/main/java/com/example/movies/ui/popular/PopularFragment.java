@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.movies.HomeActivity;
+import com.example.movies.MyApp;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.model.PopularMovies;
 import com.example.movies.model.Result;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.PopularMoviesEndPoint;
+import com.example.movies.ui.toprated.TopRatedFragment;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,7 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private RecyclerView recyclerView;
     private ArrayList<Result> resultsPopular;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private MovieAdapter adapter;
     private View root;
 
 
@@ -49,6 +53,7 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 android.R.color.black,
                 android.R.color.holo_orange_light);
 
+
         return root;
 
     }
@@ -59,7 +64,7 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        getActivity().setTitle("Popular Movies");
 
         recyclerView = view.findViewById(R.id.popular_recycler);
         recyclerView.setHasFixedSize(true);
@@ -80,8 +85,14 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 if (response.isSuccessful()) {
                     PopularMovies popularMovies = response.body();
                     resultsPopular = (ArrayList<Result>) popularMovies.getResults();
+                    MyApp.getInstance().setMoviePopular(resultsPopular);
 
-                    recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsPopular));
+                    adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMoviePopular());
+                    MyApp.getInstance().setPopAdapter(adapter);
+                    recyclerView.setAdapter(adapter);
+
+
+                    //recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsPopular));
                 }
 
             }
