@@ -1,6 +1,6 @@
 # Movie app Project using The Movie Database (TMDb) api
        
-# Other Screenshot links:
+# Screenshot links:
 
          - https://i.imgur.com/GDQAzLz.jpg
          - https://i.imgur.com/9V6zmCK.jpg
