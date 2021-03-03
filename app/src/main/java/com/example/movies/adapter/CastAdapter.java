@@ -1,25 +1,31 @@
 package com.example.movies.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
+import com.example.movies.details.CastDetails;
+import com.example.movies.details.MovieDetails;
 import com.example.movies.model.Cast;
+import com.example.movies.model.Result;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {
 
-    private final List<Cast> castResultList;
+    private List<Cast> castResultList;
     private final Context context;
 
     public CastAdapter(List<Cast> castResultList, Context context) {
@@ -30,7 +36,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
     @Override
     public CastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.cast_items,parent,false);
+        View view = inflater.inflate(R.layout.cast_items, parent, false);
         return new CastViewHolder(view);
     }
 
@@ -57,7 +63,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         }
     }
 
-    public static class CastViewHolder extends RecyclerView.ViewHolder {
+    public class CastViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView imageView;
         private final TextView textView;
@@ -67,6 +73,21 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
             imageView = itemView.findViewById(R.id.cast_img);
             textView = itemView.findViewById(R.id.cast_name);
+
+            itemView.setOnClickListener(v -> {
+                int positionCastAdapter = getAdapterPosition();
+
+                if (positionCastAdapter != RecyclerView.NO_POSITION) {
+
+                    Cast castResult = castResultList.get(positionCastAdapter);
+
+                    Intent intent = new Intent(context, CastDetails.class);
+                    intent.putExtra("cast", castResult);
+                    context.startActivity(intent);
+
+                }
+
+            });
         }
     }
 

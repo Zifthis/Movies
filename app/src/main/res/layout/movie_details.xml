@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
-
+                android:text="@string/release_date"
                 android:textColor="@color/txt_color"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/title"

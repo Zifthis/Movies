@@ -51,8 +51,7 @@ public class HomeActivity extends AppCompatActivity {
     private final Handler slideHandler = new Handler();
     private TextView textView;
     private List<Result> discoverListResult = new ArrayList<>();
-    private Fragment selectedFragment;
-    private boolean f1, f2, f3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,7 +193,7 @@ public class HomeActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = item -> {
 
-        selectedFragment = null;
+        Fragment selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();

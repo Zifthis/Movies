@@ -68,7 +68,7 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         recyclerView = view.findViewById(R.id.popular_recycler);
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
 

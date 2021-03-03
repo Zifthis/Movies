@@ -7,20 +7,20 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.example.movies.ui.toprated.TopRatedFragment;
 
 public class LoadingView extends Animation {
 
-    private Context context;
-    private ProgressBar progressBar;
-    private TextView textView;
-    private float x;
-    private float y;
+    private final Context context;
+    private final ProgressBar progressBar;
 
-    public LoadingView(Context context, ProgressBar progressBar, TextView textView, float x, float y) {
+    private final float x;
+    private final float y;
+
+    public LoadingView(Context context, ProgressBar progressBar, float x, float y) {
         this.context = context;
         this.progressBar = progressBar;
-        this.textView = textView;
         this.x = x;
         this.y = y;
     }
@@ -31,11 +31,8 @@ public class LoadingView extends Animation {
         super.applyTransformation(interpolatedTime, t);
         float value = x + (y - x) * interpolatedTime;
         progressBar.setProgress((int) value);
-        textView.setText((int) value + " %");
-
         Intent i = new Intent(context, TopRatedFragment.class);
-
-        if(value == y){
+        if (value == y) {
             context.startActivity(i);
         }
     }

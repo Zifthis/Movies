@@ -21,4 +21,9 @@
     <string name="release_date_list">Release Date:</string>
     <string name="language_list">Language:</string>
     <string name="search_bar_icon">Search</string>
+    <string name="known_for">Known for:</string>
+    <string name="name">Name:</string>
+    <string name="popularity_score">Popularity Score:</string>
+    <string name="movie_character_name">Movie Character Name:</string>
+    <string name="cast_bio_information">Cast Bio Information</string>
 </resources>

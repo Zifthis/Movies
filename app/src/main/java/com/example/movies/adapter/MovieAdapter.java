@@ -7,38 +7,21 @@ import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.example.movies.HomeActivity;
 import com.example.movies.R;
 import com.example.movies.details.MovieDetails;
-import com.example.movies.details.SimilarMovies;
-import com.example.movies.model.PopularMovies;
 import com.example.movies.model.Result;
-import com.example.movies.model.Similar;
-import com.example.movies.rest.APIClient;
-import com.example.movies.rest.SimilarMoviesEndPoint;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> implements Filterable {
 
@@ -75,11 +58,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.releasedateView.setText(dateAndTimeFormat(resultArrayListListFiltered.get(position).getReleaseDate()));
         holder.originalTitleView.setText(resultArrayListListFiltered.get(position).getOriginalLanguage().toUpperCase());
 
-        holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        holder.titleTextView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        holder.ratingView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        holder.releasedateView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        holder.originalTitleView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        //holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        //holder.titleTextView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        //holder.ratingView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        //holder.releasedateView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
+        //holder.originalTitleView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
 
         //share button
         holder.shareBnt.setOnClickListener(new View.OnClickListener() {

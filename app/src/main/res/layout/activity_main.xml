@@ -9,8 +9,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="280dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
         android:background="@drawable/round_corner_bot"
         android:orientation="vertical">
 
@@ -31,11 +34,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:paddingStart="80dp"
+            android:paddingEnd="80dp" />
 
     </LinearLayout>
 
@@ -47,6 +48,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/round_corners"
         android:padding="10dp"
+        android:gravity="center"
         android:paddingLeft="5dp"
         android:text="@string/top_rated_movies"
         android:textColor="@color/white"
@@ -56,11 +58,13 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/round_corner_top"
-        android:paddingTop="10dp" />
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -68,7 +72,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="3dp"
-        android:layout_weight="0"
         android:background="@color/bg_main"
         android:paddingBottom="10dp"
         app:itemIconSize="38sp"

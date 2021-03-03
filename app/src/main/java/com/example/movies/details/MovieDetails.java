@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.adapter.CastAdapter;
@@ -24,8 +26,11 @@ import com.example.movies.model.Similar;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.CastMoviesEndPoint;
 import com.example.movies.rest.SimilarMoviesEndPoint;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
