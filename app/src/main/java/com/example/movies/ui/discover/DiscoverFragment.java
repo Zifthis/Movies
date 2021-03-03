@@ -64,7 +64,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         recyclerView = view.findViewById(R.id.discover_recycler);
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
 
