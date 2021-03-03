@@ -7,7 +7,7 @@ Used tools in the project are:
          - MySQL Driver
          
 
-![alt text](https://i.imgur.com/GDQAzLz.jpg)
+![alt text](https://i.imgur.com/GDQAzLz.jpg =250x250)
 
 ![alt text](https://i.imgur.com/0Zr3KAC.jpg)
 
