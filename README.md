@@ -6,6 +6,7 @@ Used tools in the project are:
          - Spring Data JPA
          - MySQL Driver
          
+![](https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png =250x250)
 
 ![alt text](https://i.imgur.com/GDQAzLz.jpg =250x250)
 
