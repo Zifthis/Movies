@@ -3,11 +3,11 @@
     <string name="title_toprated">Top Rated</string>
     <string name="title_popular">Popular</string>
     <string name="title_discover">Discover</string>
-    <string name="api_key">fe3b8cf16d78a0e23f0c509d8c37caad</string>
+    <string name="api_key">60bef4941fb1388049660e34731d867a</string>
     <string name="top_nav">Top Rated Movies</string>
     <string name="pop_nav">Popular Movies</string>
     <string name="disc_nav">Discover Movies</string>
-    <string name="title_movie_detials">Title</string>
+    <string name="title_movie_details">Title</string>
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="name_author">name</string>
