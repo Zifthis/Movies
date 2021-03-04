@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.movies.HomeActivity;
 import com.example.movies.MyApp;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
@@ -25,18 +24,23 @@ import com.example.movies.rest.TopRatedMoviesEndPoint;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.observers.DisposableObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
-    private ArrayList<Result> resultsTopRated = new ArrayList<Result>();
+    private ArrayList<Result> resultsTopRated;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private MovieAdapter adapter;
     private View root;
+    private MovieAdapter adapter;
+    private Observable<TopRated> resultObservable;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +65,7 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeRefreshLayout = root.findViewById(R.id.swipe_toprated);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
+        swipeRefreshLayout.setColorScheme(
                 android.R.color.black,
                 android.R.color.holo_orange_light);
 
@@ -72,34 +76,45 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     public void getPopularMovies() {
+        resultsTopRated = new ArrayList<>();
         TopRatedMoviesEndPoint topRatedMoviesEndPoint = APIClient.getClient().create(TopRatedMoviesEndPoint.class);
-        Call<TopRated> call = topRatedMoviesEndPoint.getTopRated(this.getString(R.string.api_key));
-        call.enqueue(new Callback<TopRated>() {
-            @Override
-            public void onResponse(Call<TopRated> call, Response<TopRated> response) {
-                if (response.isSuccessful()) {
-                    TopRated topRated = response.body();
-                    resultsTopRated = (ArrayList<Result>) topRated.getResults();
-                    MyApp.getInstance().setMovieTopRated(resultsTopRated);
+        resultObservable = topRatedMoviesEndPoint.getTopRated(this.getString(R.string.api_key));
 
+        compositeDisposable.add(resultObservable.
+                subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<TopRated, Observable<Result>>() {
+                    @Override
+                    public Observable<Result> apply(TopRated topRated) throws Throwable {
+                        return Observable.fromArray(topRated.getResults().toArray(new Result[0]));
+                    }
+                })
+                .subscribeWith(new DisposableObserver<Result>() {
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull Result result) {
+                        resultsTopRated.add(result);
+                        MyApp.getInstance().setMovieTopRated(resultsTopRated);
+                    }
 
-                    adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMovieTopRated());
-                    MyApp.getInstance().setTopAdapter(adapter);
-                    recyclerView.setAdapter(adapter);
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
 
-
-                    //recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsTopRated));
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<TopRated> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                        adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMovieTopRated());
+                        MyApp.getInstance().setTopAdapter(adapter);
+                        recyclerView.setAdapter(adapter);
+                    }
+                }));
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 
     @Override
     public void onRefresh() {

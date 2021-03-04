@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.movies.HomeActivity;
 import com.example.movies.MyApp;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
@@ -23,10 +22,16 @@ import com.example.movies.model.PopularMovies;
 import com.example.movies.model.Result;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.PopularMoviesEndPoint;
-import com.example.movies.ui.toprated.TopRatedFragment;
 
 import java.util.ArrayList;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.observers.DisposableObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,23 +44,15 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private SwipeRefreshLayout swipeRefreshLayout;
     private MovieAdapter adapter;
     private View root;
-
+    private Observable<PopularMovies> resultObservable;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         root = inflater.inflate(R.layout.fragment_popular, container, false);
-
-        swipeRefreshLayout = root.findViewById(R.id.swipe_popular);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
-                android.R.color.black,
-                android.R.color.holo_orange_light);
 
 
         return root;
-
     }
 
     @Override
@@ -64,46 +61,63 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Popular Movies");
 
         recyclerView = view.findViewById(R.id.popular_recycler);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
+        swipeRefreshLayout = root.findViewById(R.id.swipe_popular);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorScheme(
+                android.R.color.black,
+                android.R.color.holo_orange_light);
 
         getPopularMovies();
     }
 
     public void getPopularMovies() {
+        resultsPopular = new ArrayList<>();
         PopularMoviesEndPoint popularMoviesEndPoint = APIClient.getClient().create(PopularMoviesEndPoint.class);
-        Call<PopularMovies> call = popularMoviesEndPoint.getPopularMovies(this.getString(R.string.api_key));
-        call.enqueue(new Callback<PopularMovies>() {
-            @Override
-            public void onResponse(Call<PopularMovies> call, Response<PopularMovies> response) {
+        resultObservable = popularMoviesEndPoint.getPopularMovies(this.getString(R.string.api_key));
 
-                if (response.isSuccessful()) {
-                    PopularMovies popularMovies = response.body();
-                    resultsPopular = (ArrayList<Result>) popularMovies.getResults();
-                    MyApp.getInstance().setMoviePopular(resultsPopular);
+        compositeDisposable.add(resultObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<PopularMovies, Observable<Result>>() {
+                    @Override
+                    public Observable<Result> apply(PopularMovies popularMovies) throws Throwable {
+                        return Observable.fromArray(popularMovies.getResults().toArray(new Result[0]));
+                    }
+                })
+                .subscribeWith(new DisposableObserver<Result>() {
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull Result result) {
+                        resultsPopular.add(result);
+                        MyApp.getInstance().setMoviePopular(resultsPopular);
+                    }
 
-                    adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMoviePopular());
-                    MyApp.getInstance().setPopAdapter(adapter);
-                    recyclerView.setAdapter(adapter);
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
 
+                    @Override
+                    public void onComplete() {
+                        adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMoviePopular());
+                        MyApp.getInstance().setPopAdapter(adapter);
+                        recyclerView.setAdapter(adapter);
+                    }
+                })
+        );
 
-                    //recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsPopular));
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<PopularMovies> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 
     @Override
     public void onRefresh() {

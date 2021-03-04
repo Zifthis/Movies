@@ -6,15 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.example.movies.HomeActivity;
 import com.example.movies.MyApp;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
@@ -22,37 +19,32 @@ import com.example.movies.model.Discover;
 import com.example.movies.model.Result;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.DiscoverMoviesEndPoint;
-import com.example.movies.ui.toprated.TopRatedFragment;
-
 import java.util.ArrayList;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.observers.DisposableObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
-    private ArrayList<Result> resultsUpcoming;
+    private ArrayList<Result> resultsDiscover;
     private SwipeRefreshLayout swipeRefreshLayout;
     private MovieAdapter adapter;
     private View root;
+    private Observable<Discover> resultObservable;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         root = inflater.inflate(R.layout.fragment_discover, container, false);
-
-        swipeRefreshLayout = root.findViewById(R.id.swipe_discover);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorScheme(android.R.color.darker_gray,
-                android.R.color.black,
-                android.R.color.holo_orange_light);
 
 
         return root;
-
     }
 
     @Override
@@ -68,43 +60,63 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerView.setLayoutManager(gridLayoutManager);
 
 
-        getUpcomingMovies();
+        swipeRefreshLayout = root.findViewById(R.id.swipe_discover);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorScheme(
+                android.R.color.black,
+                android.R.color.holo_orange_light);
+
+        getDiscoverMovies();
     }
 
-    public void getUpcomingMovies() {
+    public void getDiscoverMovies() {
+        resultsDiscover = new ArrayList<>();
         DiscoverMoviesEndPoint discoverFragment = APIClient.getClient().create(DiscoverMoviesEndPoint.class);
-        Call<Discover> call = discoverFragment.getDiscoverMovies(this.getString(R.string.api_key));
-        call.enqueue(new Callback<Discover>() {
-            @Override
-            public void onResponse(Call<Discover> call, Response<Discover> response) {
+        resultObservable = discoverFragment.getDiscoverMovies(this.getString(R.string.api_key));
 
-                if (response.isSuccessful()) {
-                    Discover discover = response.body();
-                    resultsUpcoming = (ArrayList<Result>) discover.getResults();
-                    MyApp.getInstance().setMovieDiscover(resultsUpcoming);
+        compositeDisposable.add(resultObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<Discover, Observable<Result>>() {
+                    @Override
+                    public Observable<Result> apply(Discover discover) throws Throwable {
+                        return Observable.fromArray(discover.getResults().toArray(new Result[0]));
+                    }
+                })
+                .subscribeWith(new DisposableObserver<Result>() {
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull Result result) {
+                        resultsDiscover.add(result);
+                        MyApp.getInstance().setMovieDiscover(resultsDiscover);
+                    }
 
-                    adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMovieDiscover());
-                    MyApp.getInstance().setDiscAdapter(adapter);
-                    recyclerView.setAdapter(adapter);
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
 
-                    //recyclerView.setAdapter(new MovieAdapter(getActivity(), resultsUpcoming));
-                }
+                    @Override
+                    public void onComplete() {
+                        adapter = new MovieAdapter(root.getContext(), MyApp.getInstance().getMovieDiscover());
+                        MyApp.getInstance().setDiscAdapter(adapter);
+                        recyclerView.setAdapter(adapter);
+                    }
+                })
+        );
 
-            }
-
-            @Override
-            public void onFailure(Call<Discover> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 
     @Override
     public void onRefresh() {
 
         new Handler().postDelayed(() -> {
-            getUpcomingMovies();
+            getDiscoverMovies();
             swipeRefreshLayout.setRefreshing(false);
             Toast.makeText(getContext(), "Refreshed", Toast.LENGTH_LONG).show();
 
