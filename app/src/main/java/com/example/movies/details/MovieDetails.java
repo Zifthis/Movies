@@ -2,11 +2,14 @@ package com.example.movies.details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +30,13 @@ import com.example.movies.model.TopRated;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.CastMoviesEndPoint;
 import com.example.movies.rest.SimilarMoviesEndPoint;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -67,9 +72,8 @@ public class MovieDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 
         Intent intent = getIntent();
         Button btn = findViewById(R.id.btn_similar);
@@ -88,13 +92,25 @@ public class MovieDetails extends AppCompatActivity {
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        MovieDetails.this, R.style.BottomSheetDialogTheme
+                );
+                View bottomSheetView = LayoutInflater.from(getApplicationContext())
+                        .inflate(
+                                R.layout.bottom_sheet,
+                                findViewById(R.id.bottom_sheetContainer)
+                        );
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
                 getApiSimilar();
+                bottomSheetDialog.dismiss();
             }
         });
 
     }
 
+    //details UI builder
     private void getDetails() {
 
         String imgPoster, imgCover;
@@ -126,6 +142,7 @@ public class MovieDetails extends AppCompatActivity {
         overviewTxt.setText(result.getOverview());
     }
 
+    //api call for similar date movies
     private void getApiSimilar() {
         similarListResult = new ArrayList<>();
         SimilarMoviesEndPoint similarMoviesEndPoint = APIClient.getClient().create(SimilarMoviesEndPoint.class);
@@ -169,11 +186,13 @@ public class MovieDetails extends AppCompatActivity {
 
     }
 
+    //passing current movie id
     private void init(int id) {
         authorBar = findViewById(R.id.cast_recylcer);
         getApiCast(id);
     }
 
+    //api call for cast data
     private void getApiCast(int idMovie) {
         castList = new ArrayList<>();
         CastMoviesEndPoint castMoviesEndPoint = APIClient.getClient().create(CastMoviesEndPoint.class);

@@ -26,12 +26,13 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Top Rated Movies");
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(getResources().getColor(R.color.color_background));
 
@@ -107,17 +108,19 @@ public class HomeActivity extends AppCompatActivity {
                 selectedFragment = new TopRatedFragment();
                 Vibrator topV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                 topV.vibrate(50);
+                toolbar.setTitle("Top Rated Movies");
                 break;
             case R.id.navigation_popular:
                 selectedFragment = new PopularFragment();
-
                 Vibrator popularV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                 popularV.vibrate(50);
+                toolbar.setTitle("Popular Movies");
                 break;
             case R.id.navigation_discover:
                 selectedFragment = new DiscoverFragment();
                 Vibrator discoverV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
                 discoverV.vibrate(50);
+                toolbar.setTitle("Discover Movies");
                 break;
         }
         assert selectedFragment != null;

@@ -3,34 +3,40 @@
     android:id="@+id/bottom_sheetContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_color"
+    android:background="@drawable/round_corner_top"
     android:orientation="vertical">
+
+    <View
+        android:layout_width="150dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/color_font"/>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/txt_color"
         android:gravity="center"
         android:padding="15dp"
         android:text="@string/similar_movies_bottom_sheet"
         android:textAllCaps="true"
-        android:textColor="@color/bg_main"
+        android:textColor="@color/txt_color"
         android:textSize="12sp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_color"
         android:orientation="vertical"
         android:padding="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bg_color" />
-
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
