@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main"
     android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/bg_main"
+        android:theme="@style/Theme.MyApplication.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/background_bar_border"
+            app:popupTheme="@style/Theme.MyApplication.PopupOverlay"
+            app:titleTextColor="@color/color_font" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -30,5 +51,6 @@
         app:itemIconTint="@drawable/bottom_navigation_selector"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav_menu" />
+
 
 </LinearLayout>
