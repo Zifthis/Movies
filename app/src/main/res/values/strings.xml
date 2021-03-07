@@ -26,4 +26,7 @@
     <string name="popularity_score">Popularity Score:</string>
     <string name="movie_character_name">Movie Character Name:</string>
     <string name="cast_bio_information">Cast Bio Information</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_upcoming">Upcoming</string>
 </resources>

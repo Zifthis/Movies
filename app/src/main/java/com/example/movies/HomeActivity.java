@@ -19,6 +19,7 @@ import com.example.movies.model.Result;
 import com.example.movies.ui.popular.PopularFragment;
 import com.example.movies.ui.toprated.TopRatedFragment;
 import com.example.movies.ui.discover.DiscoverFragment;
+import com.example.movies.ui.upcoming.UpcomingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TopRatedFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpcomingFragment()).commit();
 
     }
 
@@ -104,6 +105,12 @@ public class HomeActivity extends AppCompatActivity {
 
         Fragment selectedFragment = null;
         switch (item.getItemId()) {
+            case R.id.navigation_upcoming:
+                selectedFragment = new UpcomingFragment();
+                Vibrator upcomingV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                upcomingV.vibrate(50);
+                toolbar.setTitle("Upcoming Movies");
+                break;
             case R.id.navigation_toprated:
                 selectedFragment = new TopRatedFragment();
                 Vibrator topV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);

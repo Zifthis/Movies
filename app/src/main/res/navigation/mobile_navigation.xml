@@ -6,6 +6,12 @@
     app:startDestination="@+id/navigation_toprated">
 
     <fragment
+        android:id="@+id/navigation_upcoming"
+        android:name="com.example.movies.ui.upcoming.UpcomingFragment"
+        android:label="@string/title_upcoming"
+        tools:layout="@layout/fragment_upcoming" />
+
+    <fragment
         android:id="@+id/navigation_toprated"
         android:name="com.example.movies.ui.toprated.TopRatedFragment"
         android:label="@string/title_toprated"
