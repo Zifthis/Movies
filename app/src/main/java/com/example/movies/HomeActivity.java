@@ -39,10 +39,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.color_background));
+
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Top Rated Movies");
         setSupportActionBar(toolbar);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.color_background));
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpcomingFragment()).commit();
         SmoothBottomBar bottomNav;
         bottomNav = findViewById(R.id.bottom_nav);
@@ -52,26 +54,18 @@ public class HomeActivity extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpcomingFragment()).commit();
-                        Vibrator upcomingV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-                        upcomingV.vibrate(50);
                         toolbar.setTitle("Upcoming Movies");
                         break;
                     case 1:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TopRatedFragment()).commit();
-                        Vibrator topV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-                        topV.vibrate(50);
                         toolbar.setTitle("Top Rated Movies");
                         break;
                     case 2:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PopularFragment()).commit();
-                        Vibrator popularV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-                        popularV.vibrate(50);
                         toolbar.setTitle("Popular Movies");
                         break;
                     case 3:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscoverFragment()).commit();
-                        Vibrator discoverV = (Vibrator) HomeActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-                        discoverV.vibrate(50);
                         toolbar.setTitle("Discover Movies");
                         break;
                 }
