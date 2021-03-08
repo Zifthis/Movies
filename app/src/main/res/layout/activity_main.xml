@@ -40,17 +40,21 @@
         android:paddingBottom="5dp" />
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <me.ibrahimsn.lib.SmoothBottomBar
+
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="3dp"
-        android:background="@color/bg_main"
-        android:paddingBottom="10dp"
-        app:itemIconSize="38sp"
-        app:itemIconTint="@drawable/bottom_navigation_selector"
-        app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_nav_menu" />
+        android:layout_height="70dp"
+        app:itemIconSize="20dp"
+        app:iconTint="@color/color_font"
+        app:iconTintActive="@color/txt_color"
+        app:indicatorColor="@color/card_color"
+        app:indicatorRadius="10dp"
+        app:textSize="9sp"
+        app:textColor="@color/white"
+        app:backgroundColor="@color/bg_main2"
+        app:menu="@menu/bottom_nav_menu"
+     />
 
 
 </LinearLayout>
