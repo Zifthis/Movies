@@ -12,22 +12,22 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:text="Upcoming"
-        android:textColor="@color/white"
+        android:textColor="@color/txt_color"
         android:textSize="40sp" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:text="Movies"
-        android:textColor="@color/color_font"
+        android:textColor="@color/white"
         android:textSize="35sp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/movieViewPager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
         android:paddingStart="60dp"
