@@ -50,6 +50,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.Upcomi
         String imagePath = "https://image.tmdb.org/t/p/w400" + result.getPosterPath();
         Glide.with(context)
                 .load(imagePath)
+                .placeholder(R.drawable.placeholder_black)
                 .into(holder.kenBurnsView);
         holder.textTitle.setText(result.getTitle());
         holder.textRating.setText(result.getVoteAverage().toString());

@@ -126,6 +126,7 @@ public class MovieDetails extends AppCompatActivity {
         String pathPoster = "https://image.tmdb.org/t/p/w400" + imgPoster;
         Glide.with(this)
                 .load(pathPoster)
+                .placeholder(R.drawable.placeholder_black)
                 .into(posterImg);
 
 
@@ -133,6 +134,7 @@ public class MovieDetails extends AppCompatActivity {
         String pathCover = "https://image.tmdb.org/t/p/w400" + imgCover;
         Glide.with(this)
                 .load(pathCover)
+                .placeholder(R.drawable.placeholder_black)
                 .into(coverImg);
 
 

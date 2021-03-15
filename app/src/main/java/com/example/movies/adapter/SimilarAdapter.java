@@ -45,7 +45,7 @@ public class SimilarAdapter extends RecyclerView.Adapter<SimilarAdapter.SimilarV
     public void onBindViewHolder(@NotNull SimilarViewHolder holder, int position) {
 
         final Result result = mItemObjectList.get(position);
-        if(result == null){
+        if (result == null) {
             return;
         }
         String imagePath = "https://image.tmdb.org/t/p/w400" + result.getPosterPath();

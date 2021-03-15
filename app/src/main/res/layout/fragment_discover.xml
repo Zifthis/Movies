@@ -4,11 +4,13 @@
     android:id="@+id/swipe_discover"
     android:layout_width="match_parent"
     android:background="@drawable/round_corners"
+
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/discover_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="8dp"/>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

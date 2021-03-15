@@ -10,7 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:elevation="5dp"
         card_view:cardCornerRadius="15dp">
 
@@ -44,8 +47,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="end"
+                        android:maxLines="3"
                         android:textColor="@color/txt_color"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
 
