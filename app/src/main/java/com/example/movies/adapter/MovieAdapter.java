@@ -58,11 +58,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.releasedateView.setText(dateAndTimeFormat(resultArrayListListFiltered.get(position).getReleaseDate()));
         holder.originalTitleView.setText(resultArrayListListFiltered.get(position).getOriginalLanguage().toUpperCase());
 
-        //holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        //holder.titleTextView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        //holder.ratingView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        //holder.releasedateView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
-        //holder.originalTitleView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_animation));
 
         //share button
         holder.shareBnt.setOnClickListener(new View.OnClickListener() {

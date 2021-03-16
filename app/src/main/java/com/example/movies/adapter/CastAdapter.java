@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,17 +15,15 @@ import com.example.movies.R;
 import com.example.movies.details.CastDetails;
 import com.example.movies.details.MovieDetails;
 import com.example.movies.model.Cast;
-import com.example.movies.model.Result;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {
 
     private List<Cast> castResultList;
     private final Context context;
+    private MovieDetails movieDetails;
 
     public CastAdapter(List<Cast> castResultList, Context context) {
         this.castResultList = castResultList;
@@ -71,22 +68,36 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         public CastViewHolder(View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.cast_img);
+            imageView = itemView.findViewById(R.id.detail_cast_id);
             textView = itemView.findViewById(R.id.cast_name);
 
-            itemView.setOnClickListener(v -> {
-                int positionCastAdapter = getAdapterPosition();
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                            ((MovieDetails)context).getApplicationContext(), R.style.BottomSheetDialogTheme);
 
-                if (positionCastAdapter != RecyclerView.NO_POSITION) {
+                    View bottomSheetView = LayoutInflater.from(context)
+                            .inflate(
+                                    R.layout.bottom_sheet_cast,
+                                    itemView.findViewById(R.id.bottom_const)
+                            );
+                    int positionCastAdapter = getAdapterPosition();
 
-                    Cast castResult = castResultList.get(positionCastAdapter);
+                    if (positionCastAdapter != RecyclerView.NO_POSITION) {
 
-                    Intent intent = new Intent(context, CastDetails.class);
-                    intent.putExtra("cast", castResult);
-                    context.startActivity(intent);
+                        Cast castResult = castResultList.get(positionCastAdapter);
+
+                        Intent intent = new Intent(context, CastDetails.class);
+                        intent.putExtra("cast", castResult);
+                        context.startActivity(intent);
+
+                    }
+                    bottomSheetDialog.setContentView(bottomSheetView);
+                    bottomSheetDialog.show();
+                    bottomSheetDialog.dismiss();
 
                 }
-
             });
         }
     }

@@ -37,11 +37,9 @@
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="12dp"
-                android:autoSizeStepGranularity="2sp"
-                android:autoSizeTextType="uniform"
                 android:maxLines="2"
                 android:paddingBottom="5dp"
                 android:text="@string/title_movie_details"
@@ -49,14 +47,13 @@
                 android:textSize="17sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cover"
-                app:layout_constraintTop_toBottomOf="@+id/poster"
-                tools:layout_editor_absoluteX="205dp" />
+                app:layout_constraintTop_toBottomOf="@+id/poster" />
 
             <TextView
                 android:id="@+id/releasetxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="2dp"
+                android:paddingTop="5dp"
                 android:paddingBottom="2dp"
                 android:text="@string/release_date"
                 android:textColor="@color/txt_color"
@@ -65,29 +62,79 @@
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 tools:ignore="MissingConstraints" />
 
+
             <TextView
                 android:id="@+id/datemovie"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:paddingStart="2dp"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/releasetxt"
+                app:layout_constraintStart_toEndOf="@+id/releasetxt"
+                app:layout_constraintTop_toTopOf="@+id/releasetxt"
+                app:layout_constraintVertical_bias="1.0"
+                tools:ignore="MissingConstraints" />
+
+            <Button
+                android:id="@+id/btn_similar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/txt_color"
+                android:text="@string/similar_movie"
+                android:textColor="@color/bg_main"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/cover"
+                app:layout_constraintHorizontal_bias="0.842"
+                app:layout_constraintStart_toStartOf="@+id/cover"
+                app:layout_constraintTop_toBottomOf="@+id/cover" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:text="@string/score"
                 android:textColor="@color/txt_color"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/releasetxt"
                 app:layout_constraintTop_toBottomOf="@+id/releasetxt"
                 tools:ignore="MissingConstraints" />
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:paddingStart="2dp"
+                android:paddingTop="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="@+id/textView"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_star_24" />
+
             <TextView
-                android:id="@+id/geners"
+                android:id="@+id/score_movie_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingStart="3dp"
                 android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/txt_color"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/datemovie"
-                app:layout_constraintTop_toBottomOf="@+id/datemovie"
-                tools:ignore="MissingConstraints" />
+                android:text="2.3"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -103,7 +150,10 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
+                android:paddingStart="12dp"
+                android:paddingTop="1dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
                 android:text="@string/cast"
                 android:textColor="@color/txt_color"
                 android:textSize="14sp"
@@ -132,19 +182,9 @@
                 android:padding="10dp"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/btn_similar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:backgroundTint="@color/txt_color"
-                android:text="@string/similar_movie"
-                android:textColor="@color/bg_main"
-                android:textSize="12sp"
-                android:textStyle="bold" />
 
         </LinearLayout>
-    </LinearLayout>
 
+
+    </LinearLayout>
 </ScrollView>

@@ -23,7 +23,7 @@ public class CastDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cast_details);
+        setContentView(R.layout.bottom_sheet_cast);
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -40,7 +40,6 @@ public class CastDetails extends AppCompatActivity {
         String posterStringId;
         ImageView imageView = findViewById(R.id.detail_cast_id);
         TextView nametxt = findViewById(R.id.cast_id);
-        TextView knownTxt = findViewById(R.id.know_for_id);
         TextView populatity = findViewById(R.id.popularity_id);
         TextView movieChar = findViewById(R.id.movie_char_id);
 
@@ -53,7 +52,6 @@ public class CastDetails extends AppCompatActivity {
                 .into(imageView);
 
         nametxt.setText(cast.getName());
-        knownTxt.setText(cast.getKnownForDepartment());
         DecimalFormat df = new DecimalFormat("#.0");
         populatity.setText(df.format(cast.getPopularity()));
         movieChar.setText(cast.getCharacter());

@@ -1,5 +1,6 @@
 package com.example.movies.details;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Layout;
@@ -111,6 +112,7 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     //details UI builder
+    @SuppressLint("SetTextI18n")
     private void getDetails() {
 
         String imgPoster, imgCover;
@@ -118,8 +120,8 @@ public class MovieDetails extends AppCompatActivity {
         ImageView posterImg = findViewById(R.id.cover);
         TextView titelTxt = findViewById(R.id.title);
         TextView relasedateTxt = findViewById(R.id.datemovie);
-        TextView genersTxt = findViewById(R.id.geners);
         TextView overviewTxt = findViewById(R.id.overview);
+        TextView score = findViewById(R.id.score_movie_details);
 
 
         imgPoster = result.getPosterPath();
@@ -140,8 +142,8 @@ public class MovieDetails extends AppCompatActivity {
 
         titelTxt.setText(result.getTitle());
         relasedateTxt.setText(MovieAdapter.dateAndTimeFormat(result.getReleaseDate()));
-        genersTxt.setText(result.getGenreIds().toString());
         overviewTxt.setText(result.getOverview());
+        score.setText(result.getVoteAverage().toString());
     }
 
     //api call for similar date movies
@@ -220,7 +222,6 @@ public class MovieDetails extends AppCompatActivity {
                     @Override
                     public void onNext(@NonNull Cast cast) {
                         castList.add(cast);
-
                     }
 
                     @Override

@@ -23,7 +23,7 @@
             app:cardCornerRadius="25dp">
 
             <ImageView
-                android:id="@+id/cast_img"
+                android:id="@+id/detail_cast_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
