@@ -5,9 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:orientation="vertical"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_blur"/>
 
     <View
         android:id="@+id/linearLayout"
@@ -29,7 +32,7 @@
         android:innerRadius="0dp"
         android:shape="ring"
         android:thicknessRatio="0.5"
-        app:cardCornerRadius="40dp"
+        app:cardCornerRadius="50dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

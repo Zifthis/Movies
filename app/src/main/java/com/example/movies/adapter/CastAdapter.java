@@ -74,14 +74,6 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                            ((MovieDetails)context).getApplicationContext(), R.style.BottomSheetDialogTheme);
-
-                    View bottomSheetView = LayoutInflater.from(((MovieDetails)context).getApplicationContext())
-                            .inflate(
-                                    R.layout.bottom_sheet_cast,
-                                    itemView.findViewById(R.id.bottom_const)
-                            );
                     int positionCastAdapter = getAdapterPosition();
 
                     if (positionCastAdapter != RecyclerView.NO_POSITION) {
@@ -91,12 +83,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
                         Intent intent = new Intent(context, CastDetails.class);
                         intent.putExtra("cast", castResult);
                         context.startActivity(intent);
-
                     }
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
-                    bottomSheetDialog.dismiss();
-
                 }
             });
         }

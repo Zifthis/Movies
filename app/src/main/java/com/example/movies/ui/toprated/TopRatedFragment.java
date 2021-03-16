@@ -1,5 +1,6 @@
 package com.example.movies.ui.toprated;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -66,9 +67,9 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeRefreshLayout = root.findViewById(R.id.swipe_toprated);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorScheme(
-                android.R.color.black,
                 android.R.color.holo_orange_light);
-
+        int myColor = Color.parseColor("#000000");
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(myColor);
 
         getPopularMovies();
 

@@ -78,6 +78,9 @@ public class MovieDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         Button btn = findViewById(R.id.btn_similar);
+
+        RecyclerView castRecylcer = findViewById(R.id.cast_recylcer);
+
         if (intent.hasExtra("result")) {
             result = getIntent().getParcelableExtra("result");
             movieId = result.getId();
@@ -105,6 +108,24 @@ public class MovieDetails extends AppCompatActivity {
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
                 getApiSimilar();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        castRecylcer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        MovieDetails.this, R.style.BottomSheetDialogTheme);
+
+                View bottomSheetView = LayoutInflater.from(getApplicationContext())
+                        .inflate(
+                                R.layout.bottom_sheet_cast,
+                                findViewById(R.id.bottom_const)
+                        );
+
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
                 bottomSheetDialog.dismiss();
             }
         });
