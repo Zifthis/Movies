@@ -74,10 +74,10 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
                             ((MovieDetails)context).getApplicationContext(), R.style.BottomSheetDialogTheme);
 
-                    View bottomSheetView = LayoutInflater.from(context)
+                    View bottomSheetView = LayoutInflater.from(((MovieDetails)context).getApplicationContext())
                             .inflate(
                                     R.layout.bottom_sheet_cast,
                                     itemView.findViewById(R.id.bottom_const)
