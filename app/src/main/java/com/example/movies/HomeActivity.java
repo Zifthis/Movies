@@ -54,8 +54,7 @@ public class HomeActivity extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         getSupportFragmentManager().beginTransaction()
-                                .setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right,
-                                        R.anim.enter_right_to_left, R.anim.exit_right_to_left)
+
                                 .replace(R.id.fragment_container, new UpcomingFragment())
                                 .commit();
                         toolbar.setTitle("Upcoming Movies");
