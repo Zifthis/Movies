@@ -53,19 +53,35 @@ public class HomeActivity extends AppCompatActivity {
             public void onItemSelect(int i) {
                 switch (i) {
                     case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpcomingFragment()).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right,
+                                        R.anim.enter_right_to_left, R.anim.exit_right_to_left)
+                                .replace(R.id.fragment_container, new UpcomingFragment())
+                                .commit();
                         toolbar.setTitle("Upcoming Movies");
                         break;
                     case 1:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TopRatedFragment()).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right,
+                                        R.anim.enter_right_to_left, R.anim.exit_right_to_left)
+                                .replace(R.id.fragment_container, new TopRatedFragment())
+                                .commit();
                         toolbar.setTitle("Top Rated Movies");
                         break;
                     case 2:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PopularFragment()).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right,
+                                        R.anim.enter_right_to_left, R.anim.exit_right_to_left)
+                                .replace(R.id.fragment_container, new PopularFragment())
+                                .commit();
                         toolbar.setTitle("Popular Movies");
                         break;
                     case 3:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscoverFragment()).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right,
+                                        R.anim.enter_right_to_left, R.anim.exit_right_to_left)
+                                .replace(R.id.fragment_container, new DiscoverFragment())
+                                .commit();
                         toolbar.setTitle("Discover Movies");
                         break;
                 }
