@@ -9,24 +9,64 @@
         android:id="@+id/navigation_upcoming"
         android:name="com.example.movies.ui.upcoming.UpcomingFragment"
         android:label="@string/title_upcoming"
-        tools:layout="@layout/fragment_upcoming" />
+        tools:layout="@layout/fragment_upcoming" >
+        <action
+            android:id="@+id/action_navigation_upcoming_to_navigation_toprated"
+            app:destination="@id/navigation_toprated" />
+        <action
+            android:id="@+id/action_navigation_upcoming_to_navigation_popular"
+            app:destination="@id/navigation_popular" />
+        <action
+            android:id="@+id/action_navigation_upcoming_to_navigation_discover"
+            app:destination="@id/navigation_discover" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_toprated"
         android:name="com.example.movies.ui.toprated.TopRatedFragment"
         android:label="@string/title_toprated"
-        tools:layout="@layout/fragment_toprated" />
+        tools:layout="@layout/fragment_toprated" >
+        <action
+            android:id="@+id/action_navigation_toprated_to_navigation_popular"
+            app:destination="@id/navigation_popular" />
+        <action
+            android:id="@+id/action_navigation_toprated_to_navigation_upcoming"
+            app:destination="@id/navigation_upcoming" />
+        <action
+            android:id="@+id/action_navigation_toprated_to_navigation_discover"
+            app:destination="@id/navigation_discover" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_popular"
         android:name="com.example.movies.ui.popular.PopularFragment"
         android:label="@string/title_popular"
-        tools:layout="@layout/fragment_popular" />
+        tools:layout="@layout/fragment_popular" >
+        <action
+            android:id="@+id/action_navigation_popular_to_navigation_discover"
+            app:destination="@id/navigation_discover" />
+        <action
+            android:id="@+id/action_navigation_popular_to_navigation_toprated"
+            app:destination="@id/navigation_toprated" />
+        <action
+            android:id="@+id/action_navigation_popular_to_navigation_upcoming"
+            app:destination="@id/navigation_upcoming" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_discover"
         android:name="com.example.movies.ui.popular.PopularFragment"
         android:label="@string/title_discover"
-        tools:layout="@layout/fragment_discover" />
+        tools:layout="@layout/fragment_discover" >
+        <action
+            android:id="@+id/action_navigation_discover_to_navigation_popular"
+            app:destination="@id/navigation_popular" />
+        <action
+            android:id="@+id/action_navigation_discover_to_navigation_toprated"
+            app:destination="@id/navigation_toprated" />
+        <action
+            android:id="@+id/action_navigation_discover_to_navigation_upcoming"
+            app:destination="@id/navigation_upcoming" />
+    </fragment>
 
 </navigation>
