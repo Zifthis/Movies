@@ -55,6 +55,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
     implementation 'com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0'
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7'
-    compile 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:3.0.3'
 
 }

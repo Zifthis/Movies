@@ -2,9 +2,11 @@ package com.example.movies.ui.upcoming;
 
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -13,6 +15,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.movies.MyApp;
 import com.example.movies.R;
@@ -24,6 +28,8 @@ import com.example.movies.model.Upcoming;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.TopRatedMoviesEndPoint;
 import com.example.movies.rest.UpcomingMovieEndPoint;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
@@ -42,6 +48,7 @@ public class UpcomingFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View root;
     private UpcomingAdapter adapter;
+    private LinearLayout layoutOnboardingIndicators;
     private Observable<Upcoming> resultObservable;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -59,9 +66,13 @@ public class UpcomingFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        layoutOnboardingIndicators = root.findViewById(R.id.layoutOnBoardingIndicators);
         viewPager2 = root.findViewById(R.id.movieViewPager);
         getUpcomingMovies();
+
+
     }
+
 
     public void getUpcomingMovies() {
         resultsUpcoming = new ArrayList<>();
@@ -93,8 +104,57 @@ public class UpcomingFragment extends Fragment {
                     public void onComplete() {
                         adapter = new UpcomingAdapter(getContext(), resultsUpcoming);
                         viewPager2.setAdapter(adapter);
+                        setupOnboardingIndicator();
+                        setCurrentOnboardingIndicator(0);
+
+                        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                            @Override
+                            public void onPageSelected(int position) {
+                                super.onPageSelected(position);
+                                setCurrentOnboardingIndicator(position);
+                            }
+                        });
                     }
                 }));
+    }
+
+    //indicator
+    private void setupOnboardingIndicator() {
+        ImageView[] indicators = new ImageView[adapter.getItemCount()];
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(8, 0, 8, 0);
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i] = new ImageView(getContext());
+            indicators[i].setImageDrawable(ContextCompat.getDrawable(
+                    getContext(),
+                    R.drawable.onborading_idicator_inactive
+            ));
+            indicators[i].setLayoutParams(layoutParams);
+            layoutOnboardingIndicators.addView(indicators[i]);
+        }
+    }
+
+    //current indicator
+    private void setCurrentOnboardingIndicator(int index) {
+        int count = layoutOnboardingIndicators.getChildCount();
+        for (int i = 0; i < count; i++) {
+            ImageView imageView = (ImageView) layoutOnboardingIndicators.getChildAt(i);
+            if (i == index) {
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                                getContext(),
+                                R.drawable.onboarding_indicator_active)
+                );
+            } else {
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                                getContext(),
+                                R.drawable.onborading_idicator_inactive)
+                );
+            }
+        }
     }
 
     @Override
