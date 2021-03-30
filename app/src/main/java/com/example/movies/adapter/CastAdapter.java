@@ -1,7 +1,9 @@
 package com.example.movies.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +81,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
                     if (positionCastAdapter != RecyclerView.NO_POSITION) {
 
                         Cast castResult = castResultList.get(positionCastAdapter);
+
 
                         Intent intent = new Intent(context, CastDetails.class);
                         intent.putExtra("cast", castResult);

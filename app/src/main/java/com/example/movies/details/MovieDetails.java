@@ -59,7 +59,7 @@ public class MovieDetails extends AppCompatActivity {
     private Result result;
     private MovieAdapter adapter;
     private RecyclerView authorBar;
-    int movieId;
+    private int movieId;
     private CastAdapter castAdapter;
     private List<Result> similarListResult;
     private List<Cast> castList;
@@ -98,7 +98,7 @@ public class MovieDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                        MovieDetails.this, R.style.BottomSheetDialogTheme
+                        MovieDetails.this, R.style.CustomBottomSheetDialogTheme
                 );
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
                         .inflate(
@@ -116,7 +116,7 @@ public class MovieDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                        MovieDetails.this, R.style.BottomSheetDialogTheme);
+                        MovieDetails.this, R.style.CustomBottomSheetDialogTheme);
 
                 View bottomSheetView = LayoutInflater.from(getApplicationContext())
                         .inflate(

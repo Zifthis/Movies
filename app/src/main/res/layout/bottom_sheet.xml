@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheetContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/round_corner_top"
+    android:background="@color/bg_color"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="150dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="125dp"
         android:layout_height="5dp"
-        android:layout_gravity="center"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="15dp"
-        android:background="@color/color_font"/>
+        app:cardCornerRadius="15dp"
+        android:layout_gravity="center">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_font"/>
+
+    </androidx.cardview.widget.CardView>
 
 
     <TextView
@@ -24,7 +33,7 @@
         android:text="@string/similar_movies_bottom_sheet"
         android:textAllCaps="true"
         android:textColor="@color/txt_color"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textStyle="bold" />
 
     <LinearLayout

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_img"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_blur">
 
     <LinearLayout
@@ -14,12 +14,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:src="@drawable/placeholder_black"
                 app:layout_constraintDimensionRatio="h,1:1"
                 tools:ignore="MissingConstraints"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -29,6 +30,7 @@
                 android:layout_width="155dp"
                 android:layout_height="185dp"
                 android:paddingStart="15dp"
+                android:src="@drawable/placeholder_black"
                 app:layout_constraintBottom_toBottomOf="@+id/poster"
                 app:layout_constraintTop_toBottomOf="@+id/poster"
                 tools:ignore="MissingConstraints,RtlSymmetry"

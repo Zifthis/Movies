@@ -1,5 +1,6 @@
 package com.example.movies.ui.discover;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +53,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         return root;
     }
 
+
     @Override
     public void onViewCreated(
             @NonNull View view,
@@ -63,6 +65,8 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+
 
 
         swipeRefreshLayout = root.findViewById(R.id.swipe_discover);

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class UpcomingFragment extends Fragment {
 
         layoutOnboardingIndicators = root.findViewById(R.id.layoutOnBoardingIndicators);
         viewPager2 = root.findViewById(R.id.movieViewPager);
+
         getUpcomingMovies();
 
 
@@ -114,6 +116,8 @@ public class UpcomingFragment extends Fragment {
                                 setCurrentOnboardingIndicator(position);
                             }
                         });
+
+
                     }
                 }));
     }
@@ -156,6 +160,7 @@ public class UpcomingFragment extends Fragment {
             }
         }
     }
+
 
     @Override
     public void onResume() {

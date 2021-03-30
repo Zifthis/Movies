@@ -1,6 +1,7 @@
 package com.example.movies.ui.popular;
 
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,11 +57,13 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
         return root;
     }
 
+
     @Override
     public void onViewCreated(
             @NonNull View view,
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
 
         recyclerView = view.findViewById(R.id.popular_recycler);
