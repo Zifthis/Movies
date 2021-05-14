@@ -62,6 +62,14 @@ public class MovieDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         Button btn = findViewById(R.id.btn_similar);
+        Button btnBack = findViewById(R.id.back_btn);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         RecyclerView castRecylcer = findViewById(R.id.cast_recylcer);
 

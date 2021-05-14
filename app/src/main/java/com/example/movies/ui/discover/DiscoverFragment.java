@@ -63,19 +63,16 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
             @NonNull View view,
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         recyclerView = view.findViewById(R.id.discover_recycler);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
-
+        recyclerView.scrollToPosition(0);
 
         //HERE WE RETRIEVE LAST POSITION ON START
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         lastPosition = getPrefs.getInt("lastPos", 0);
         recyclerView.scrollToPosition(lastPosition);
-
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
@@ -142,6 +139,8 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         e.putInt("lastPos", lastPosition);
         e.apply();
     }
+
+
 
     @Override
     public void onRefresh() {

@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
         app:cardBackgroundColor="@color/bg_color"
-        app:cardCornerRadius="28dp">
+        app:cardCornerRadius="35dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
@@ -37,8 +37,9 @@
         android:layout_gravity="center"
         android:paddingBottom="10dp"
         android:text="@string/name_author"
-        android:textColor="@color/txt_color"
-        android:textSize="8sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="9sp"
         tools:ignore="SmallSp" />
 
 

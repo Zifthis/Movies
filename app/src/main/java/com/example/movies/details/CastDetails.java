@@ -1,27 +1,22 @@
 package com.example.movies.details;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
-import com.example.movies.adapter.SimilarAdapter;
 import com.example.movies.model.Cast;
 import com.example.movies.model.Result;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -30,6 +25,7 @@ public class CastDetails extends AppCompatActivity {
 
     private Cast cast;
     private List<Cast> castList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

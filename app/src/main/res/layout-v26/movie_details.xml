@@ -42,8 +42,12 @@
                 android:maxLines="2"
                 android:paddingBottom="5dp"
                 android:text="@string/title_movie_details"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
                 android:textColor="@color/txt_color"
-                android:textSize="17sp"
+                android:textSize="23sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cover"
                 app:layout_constraintTop_toBottomOf="@+id/poster" />
@@ -55,6 +59,10 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="2dp"
                 android:text="@string/release_date"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
                 android:textColor="@color/txt_color"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/title"
@@ -73,6 +81,10 @@
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
                 app:layout_constraintBottom_toBottomOf="@+id/releasetxt"
                 app:layout_constraintStart_toEndOf="@+id/releasetxt"
                 app:layout_constraintTop_toTopOf="@+id/releasetxt"
@@ -104,6 +116,10 @@
                 android:text="@string/score"
                 android:textColor="@color/txt_color"
                 android:textSize="12sp"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
                 app:layout_constraintStart_toStartOf="@+id/releasetxt"
                 app:layout_constraintTop_toBottomOf="@+id/releasetxt"
                 tools:ignore="MissingConstraints" />
@@ -129,7 +145,11 @@
                 android:paddingTop="2dp"
                 android:text="2.3"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="17sp"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -155,19 +175,30 @@
                 android:text="@string/cast"
                 android:textColor="@color/txt_color"
                 android:textSize="14sp"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cast_recylcer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp" />
+                android:padding="2dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
                 android:text="@string/storyline"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
                 android:textColor="@color/txt_color"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -176,8 +207,33 @@
                 android:id="@+id/overview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="12sp" />
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="3dp"
+                android:textSize="12sp"
+                android:shadowColor="#000000"
+                android:shadowDx="3.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/back_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/txt_color"
+                android:text="@string/similar_back"
+                android:textColor="@color/bg_main"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/cover"
+                app:layout_constraintHorizontal_bias="0.842"
+                app:layout_constraintStart_toStartOf="@+id/cover"
+                app:layout_constraintTop_toBottomOf="@+id/cover" />
 
 
         </LinearLayout>

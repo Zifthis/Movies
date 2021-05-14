@@ -11,6 +11,7 @@
     <string name="cast">Cast</string>
     <string name="storyline">Storyline</string>
     <string name="similar_movie">Similar Movie</string>
+    <string name="similar_back">BACK</string>
     <string name="release_date">Release date:</string>
     <string name="release_date_list">Release Date:</string>
     <string name="language_list">Language:</string>
