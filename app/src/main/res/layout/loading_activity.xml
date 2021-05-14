@@ -25,7 +25,6 @@
         app:cardCornerRadius="30dp">
 
         <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/gif_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_color"

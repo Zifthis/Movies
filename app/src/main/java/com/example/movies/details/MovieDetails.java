@@ -3,22 +3,15 @@ package com.example.movies.details;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.adapter.CastAdapter;
@@ -27,30 +20,21 @@ import com.example.movies.model.Cast;
 import com.example.movies.model.CastMovie;
 import com.example.movies.model.Result;
 import com.example.movies.model.Similar;
-import com.example.movies.model.TopRated;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.CastMoviesEndPoint;
 import com.example.movies.rest.SimilarMoviesEndPoint;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MovieDetails extends AppCompatActivity {
@@ -139,8 +123,8 @@ public class MovieDetails extends AppCompatActivity {
         String imgPoster, imgCover;
         ImageView coverImg = findViewById(R.id.poster);
         ImageView posterImg = findViewById(R.id.cover);
-        TextView titelTxt = findViewById(R.id.title);
-        TextView relasedateTxt = findViewById(R.id.datemovie);
+        TextView titleTxt = findViewById(R.id.title);
+        TextView releasedTxt = findViewById(R.id.datemovie);
         TextView overviewTxt = findViewById(R.id.overview);
         TextView score = findViewById(R.id.score_movie_details);
 
@@ -161,8 +145,8 @@ public class MovieDetails extends AppCompatActivity {
                 .into(coverImg);
 
 
-        titelTxt.setText(result.getTitle());
-        relasedateTxt.setText(MovieAdapter.dateAndTimeFormat(result.getReleaseDate()));
+        titleTxt.setText(result.getTitle());
+        releasedTxt.setText(MovieAdapter.dateAndTimeFormat(result.getReleaseDate()));
         overviewTxt.setText(result.getOverview());
         score.setText(result.getVoteAverage().toString());
     }

@@ -4,15 +4,9 @@
     <string name="title_popular">Popular</string>
     <string name="title_discover">Discover</string>
     <string name="api_key">60bef4941fb1388049660e34731d867a</string>
-    <string name="top_nav">Top Rated Movies</string>
-    <string name="pop_nav">Popular Movies</string>
-    <string name="disc_nav">Discover Movies</string>
     <string name="title_movie_details">Title</string>
-    <string name="upcoming_movies">Upcoming Movies</string>
-    <string name="top_rated_movies">Top Rated Movies</string>
     <string name="name_author">name</string>
     <string name="similar_movies_bottom_sheet">Similar Movies</string>
-    <string name="movie_title_image_item">Movie title</string>
     <string name="movie_app_splash">Movie App</string>
     <string name="cast">Cast</string>
     <string name="storyline">Storyline</string>
@@ -21,12 +15,9 @@
     <string name="release_date_list">Release Date:</string>
     <string name="language_list">Language:</string>
     <string name="search_bar_icon">Search</string>
-    <string name="known_for">Known for:</string>
     <string name="name">Name:</string>
     <string name="popularity_score">Popularity Score:</string>
     <string name="movie_character_name">Character Name:</string>
-    <string name="cast_bio_information">Cast Bio Information</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_upcoming">Upcoming</string>
     <string name="score">Score:</string>
 </resources>

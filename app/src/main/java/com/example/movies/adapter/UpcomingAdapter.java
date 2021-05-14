@@ -81,6 +81,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.Upcomi
                 public void onClick(View v) {
                     int adapterPosition = getAdapterPosition();
                     if (adapterPosition != RecyclerView.NO_POSITION) {
+
                         Result resultPosition = mItemObjectList.get(adapterPosition);
 
                         Intent intent = new Intent(context, MovieDetails.class);

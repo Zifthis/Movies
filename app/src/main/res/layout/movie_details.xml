@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scroll_img"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_blur">
@@ -149,7 +148,6 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="12dp"
@@ -168,7 +166,6 @@
                 android:padding="3dp" />
 
             <TextView
-                android:id="@+id/storylinetxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"

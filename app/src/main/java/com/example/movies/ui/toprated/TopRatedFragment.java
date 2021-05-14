@@ -1,9 +1,11 @@
 package com.example.movies.ui.toprated;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,11 @@ import com.example.movies.model.TopRated;
 import com.example.movies.rest.APIClient;
 import com.example.movies.rest.TopRatedMoviesEndPoint;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.prefs.PreferenceChangeEvent;
+import java.util.prefs.PreferenceChangeListener;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -43,12 +49,11 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
     private MovieAdapter adapter;
     private Observable<TopRated> resultObservable;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private int lastPosition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_toprated, container, false);
-
-
         return root;
     }
 
@@ -64,6 +69,19 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
+
+        //HERE WE RETRIEVE LAST POSITION ON START
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        lastPosition = getPrefs.getInt("lastPos", 0);
+        recyclerView.scrollToPosition(lastPosition);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                lastPosition = gridLayoutManager.findFirstVisibleItemPosition();
+            }
+        });
 
         swipeRefreshLayout = root.findViewById(R.id.swipe_toprated);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -116,6 +134,11 @@ public class TopRatedFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onDestroy() {
         super.onDestroy();
         compositeDisposable.clear();
+        //save the position in sharedPreferences onDestroy
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor e = getPrefs.edit();
+        e.putInt("lastPos", lastPosition);
+        e.apply();
     }
 
     @Override
